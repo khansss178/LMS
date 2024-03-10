@@ -7,7 +7,7 @@ import { AppTopbar } from "./AppTopbar";
 import { AppFooter } from "./AppFooter";
 import { AppMenu } from "./AppMenu";
 import { AppConfig } from "./AppConfig";
-
+//coponent calling
 import Dashboard from "./components/Dashboard";
 import Login from "./pages/login/Login";
 
@@ -23,6 +23,12 @@ import "./assets/demo/flags/flags.css";
 import "./assets/demo/Demos.scss";
 import "./assets/layout/layout.scss";
 import "./App.scss";
+import UserManagement from "./pages/usermanagement";
+import SupportView from "./pages/support";
+import InvoicesView from "./pages/transaction/invoices";
+import ScheduleOfAssignment from "./pages/transaction/scheduleofassignment";
+import ClientRequest from "./pages/creditrequest/clientrequest";
+import DebtorRequest from "./pages/creditrequest/debtorrequest";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");
@@ -143,20 +149,48 @@ const App = () => {
             ],
         },
         {
-
             items: [
                 {
                     label: "Transactions",
                     icon: "pi pi-fw pi-bookmark",
                     items: [
-                        { label: "Invoices", icon: "pi pi-fw pi-bookmark" },
-                        { label: "Schedule of Assignment", icon: "pi pi-fw pi-bookmark" },
-
-
+                        { label: "Invoices", icon: "pi pi-fw pi-bookmark", to: "/invoices" },
+                        { label: "Schedule of Assignment", icon: "pi pi-fw pi-bookmark", to: "/scheduleofassignment" },
                     ],
                 },
             ],
         },
+        {
+            items: [
+                {
+                    label: "Credit Request",
+                    icon: "pi pi-fw pi-bookmark",
+                    items: [
+                        { label: "Clients Request", icon: "pi pi-fw pi-bookmark", to:"/clientrequest" },
+                        { label: "Debtor Request", icon: "pi pi-fw pi-bookmark", to:"/debtorrequest" },
+                    ],
+                },
+            ],
+        },
+        {
+            items: [
+                {
+                    label: "Support",
+                    icon: "pi pi-fw pi-home",
+                    to: "/support",
+                },
+            ],
+        },
+        {
+            items: [
+                {
+                    label: "User Management",
+                    icon: "pi pi-fw pi-home",
+                    to: "/usermanagement",
+                },
+            ],
+        },
+
 
     ];
 
@@ -196,7 +230,19 @@ const App = () => {
                     </div>
                     <div className="layout-main-container">
                         <div className="layout-main">
+                            {/* //Dashboard */}
                             <Route path="/dashboard" component={Dashboard} />
+                            {/* Transactions */}
+                            <Route path="/invoices" component={InvoicesView} />
+                            <Route path="/scheduleofassignment" component={ScheduleOfAssignment} />
+                            {/* Credit Request */}
+                            <Route path="/clientrequest" component={ClientRequest} />
+                            <Route path="/debtorrequest" component={DebtorRequest} />
+
+                            {/* UserManagement */}
+                            <Route path="/usermanagement" component={UserManagement} />
+                            {/* Support */}
+                            <Route path="/support" component={SupportView} />
                         </div>
                         <AppFooter layoutColorMode={layoutColorMode} />
                     </div>

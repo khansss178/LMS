@@ -1,3 +1,67 @@
-.layout-config{
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+
+:root {
+    --body-bg: #e7e7e7;
+    --sidebar-active-color: #3165cb;
+    --bg-white: #fff;
+    --color-bg: #5063BF;
+    --color-border: #e5e7eb;
+    --color-sidebar-item: #f3f4f6;
+    --a-color: #3165cb;
+    --sidebar-active: #3E4FA5;
+    --base-color: #fff;
+    --filter-bg: #E4E4E4;
+    --graph-card-shadow: #ddd;
+    --view-name-color: #495057;
+}
+
+.layout-config {
     display: none !important;
+}
+
+body {
+    background-color: #F7F7F7;
+    font-family: "Poppins", sans-serif;
+    height: auto;
+    overflow-y: auto;
+    overscroll-behavior-x: none;
+}
+
+body::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+body::-webkit-scrollbar-track {
+    background: #eaecf0;
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--sidebar-active-color);
+    border-radius: 5px;
+    opacity: 0.3;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: var(--sidebar-active-color);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.p-inputtextarea {
+    resize: none;
+}
+
+.layout-menu li a.router-link-exact-active i {
+    color: var(--bg-white);
+}
+
+.layout-menu li a i {
+    font-size: 18px;
+    margin-right: 5px;
 }
