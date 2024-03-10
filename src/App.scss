@@ -65,3 +65,6 @@ input::-webkit-inner-spin-button {
     font-size: 18px;
     margin-right: 5px;
 }
+.p-button:focus{
+    box-shadow: none !important;
+}
