@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
-import { WindowScrollController } from "@fullcalendar/core";
 
 export const AppTopbar = (props) => {
     const handleLogout = () => {
@@ -13,7 +12,7 @@ export const AppTopbar = (props) => {
         <div className="layout-topbar">
             <Link to="/" className="layout-topbar-logo">
                 <img src={props.layoutColorMode === "light" ? "assets/layout/images/js_connect_logo_main@2x.png" : "assets/layout/images/logo-white.svg"} alt="logo" />
-                {/* <span style={{ color: "#004890" }}>JS Connect</span> */}
+                
             </Link>
 
             <button type="button" className="p-link  layout-menu-button layout-topbar-button" onClick={props.onToggleMenuClick}>
@@ -31,18 +30,7 @@ export const AppTopbar = (props) => {
                         <span>Logout</span>
                     </button>
                 </li>
-                <li>
-                    <button className="p-link layout-topbar-button" onClick={props.onMobileSubTopbarMenuClick}>
-                        <i className="pi pi-cog" />
-                        <span>Settings</span>
-                    </button>
-                </li>
-                <li>
-                    <button className="p-link layout-topbar-button" onClick={props.onMobileSubTopbarMenuClick}>
-                        <i className="pi pi-user" />
-                        <span>Profile</span>
-                    </button>
-                </li>
+
             </ul>
         </div>
     );
