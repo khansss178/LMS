@@ -13,7 +13,6 @@ const InvoicesView = () => {
           <Column field="nature" header="Natures"></Column>
           <Column field="feeName" header="Fee Names"></Column>
           <Column field="charges" header="Fee Charges"></Column>
-
         </DataTable>
 
       </div>
