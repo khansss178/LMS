@@ -17,7 +17,7 @@ const GlobalMultiSelect = (props) => {
   return (
     <>
       <MultiSelect
-        className={input_styles}
+        className={"input_styles"}
         value={value}
         options={options}
         onChange={onChange}

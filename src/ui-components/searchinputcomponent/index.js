@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 //styles
 import "./searchinputcomponent.scss";
 //components
 import { InputText } from "primereact/inputtext";
 
 const SearchInputComponent = (props) => {
-    const { placeholder, value, setKeyword, isClassWidth = false } = props;
+    const { placeholder, value, isClassWidth = false } = props;
     return (
         <div className={isClassWidth ? "custom_search_width" : "search_input_width"}>
             <span className="p-input-icon-right text ">
