@@ -11,12 +11,9 @@ const GlobalVerticalDots = (props) => {
         items,
         handleMenuOpen,
         isDisabled = false,
-
         btnclr = false,
-
     } = props;
     const menu = useRef(null);
-
     const renderMenuItem = (item, index) => {
         const isLastItem = index === items.length - 1;
         const menuClass = isLastItem ? "last_kebab_menu_item" : "kebab_menu_item";
