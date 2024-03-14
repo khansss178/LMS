@@ -7,9 +7,6 @@ import { AppTopbar } from "./AppTopbar";
 import { AppFooter } from "./AppFooter";
 import { AppMenu } from "./AppMenu";
 import { AppConfig } from "./AppConfig";
-//coponent calling
-import Dashboard from "./components/Dashboard";
-import Login from "./pages/login/Login";
 
 
 import PrimeReact from "primereact/api";
@@ -23,6 +20,13 @@ import "./assets/demo/flags/flags.css";
 import "./assets/demo/Demos.scss";
 import "./assets/layout/layout.scss";
 import "./App.scss";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+//coponent calling
+import Dashboard from "./components/Dashboard";
+import Login from "./pages/login/Login";
 import UserManagement from "./pages/usermanagement";
 import SupportView from "./pages/support";
 import InvoicesView from "./pages/transaction/invoices";
@@ -166,8 +170,8 @@ const App = () => {
                     label: "Credit Request",
                     icon: "pi pi-fw pi-bookmark",
                     items: [
-                        { label: "Clients Request", icon: "pi pi-fw pi-bookmark", to:"/clientrequest" },
-                        { label: "Debtor Request", icon: "pi pi-fw pi-bookmark", to:"/debtorrequest" },
+                        { label: "Clients Request", icon: "pi pi-fw pi-bookmark", to: "/clientrequest" },
+                        { label: "Debtor Request", icon: "pi pi-fw pi-bookmark", to: "/debtorrequest" },
                     ],
                 },
             ],

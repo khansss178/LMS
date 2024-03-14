@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "primereact/button";
 // import { loginAction } from "../../redux/actions/authAction";
-import LogoImage from "../../Images/js_connect_logo_main@2x.png";
+// import LogoImage from "../../Images/js_connect_logo_main@2x.png";
 import "./Login.css";
 
 const Login = () => {
@@ -30,7 +30,7 @@ const Login = () => {
     return (
         <div className="login_body">
             <div align="center" style={{ marginTop: "4%", marginBottom: "1%" }}>
-                <img src={LogoImage} alt="" width={"50%"} />
+                <img src="" alt="" width={"50%"} />
             </div>
             <div class="container" id="container">
                 <div class="form-container sign-in-container">
@@ -51,14 +51,12 @@ const Login = () => {
                     <div class="overlay">
                         <div class="overlay-panel overlay-right">
                             <h1 className="login_h1">Welcome!</h1>
-                            <p className="login_p">Please login to access TBML Portal</p>
+                            <p className="login_p">Please login to access TEEK Portal</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <footer>
-                <p className="login_p"> Powered by App In Snap</p>
-            </footer>
+
         </div>
     );
 };
