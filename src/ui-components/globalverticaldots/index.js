@@ -11,10 +11,9 @@ const GlobalVerticalDots = (props) => {
         items,
         handleMenuOpen,
         isDisabled = false,
-        selected,
-        className,
+
         btnclr = false,
-        menuRef,
+
     } = props;
     const menu = useRef(null);
 
@@ -23,7 +22,7 @@ const GlobalVerticalDots = (props) => {
         const menuClass = isLastItem ? "last_kebab_menu_item" : "kebab_menu_item";
         return (
             <div
-                className={`${menuClass} ${item?.isDisabled ||isDisabled ? "disabled_kebab_menu" : "cursor-pointer"
+                className={`${menuClass} ${item?.isDisabled || isDisabled ? "disabled_kebab_menu" : "cursor-pointer"
                     } `}
                 onClick={() => (item.isDisabled ? null : handleChange(item.id))}
             >

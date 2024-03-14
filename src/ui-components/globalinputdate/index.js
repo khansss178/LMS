@@ -47,6 +47,7 @@ const GlobalInputdate = (props) => {
         showIcon
         showTime={showTime}
         showSeconds={showSeconds}
+        monthNavigator yearNavigator yearRange="1940:2090"
       />
     </>
   );

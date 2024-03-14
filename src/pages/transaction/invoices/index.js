@@ -2,41 +2,35 @@ import React, { useState } from 'react'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
-import { BsEye, BsTrash } from 'react-icons/bs';
-import { FaUserAlt } from "react-icons/fa";
+import { BsTrash } from 'react-icons/bs';
+import { FaRegEdit } from "react-icons/fa";
 import SearchInputComponent from '../../../ui-components/searchinputcomponent';
 import GlobalDialogIndex from '../../../ui-components/globaldialoge';
 import DeleteDialog from './component/deletedialog';
+import AddEditInvoice from './component';
 
 const InvoicesView = () => {
   const data = [{ invoiceNo: "test", scheduleno: "temp", clientName: "12PKR", debtorName: "tester", invoiceDate: "12/12/2023", fundingDate: "12/12/2023", status: "Pending", invoiceAmount: "$ 19.00" }]
 
 
-// States
-
-const [delDialog, setDelDialog] = useState(false);
+  // States
+  const [isAddDialog, setIsAddDialog] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [delDialog, setDelDialog] = useState(false);
 
   // Action Template
   const kebabMenuItems = [
-    { id: 1, title: "Assign Ticket", icon: <FaUserAlt /> },
-    { id: 2, title: "Response", icon: <BsEye /> },
-    { id: 3, title: "Delete", icon: <BsTrash /> },
+    { id: 1, title: "Edit", icon: <FaRegEdit /> },
+    { id: 2, title: "Delete", icon: <BsTrash /> },
   ];
   const handleOpenMenuItems = (status) => {
 
     if (status === 1) {
-      // setDelDialog(true);
-      // setEditData("Edit");
-      // router.push("/campaign/add-campaign");
+      setIsAddDialog(true);
+      setEditData("Edit")
     } else if (status === 2) {
-      // setIsResponseDialog(true);
-      // setIsAddDialog(false);
-      // setEditData("Edit")
-
-    } else if (status === 3) {
       setDelDialog(true);
-      // setIsAddDialog(false);
-      // setIsResponseDialog(false);
+
     }
   };
   const actionTemplate = () => {
@@ -57,7 +51,7 @@ const [delDialog, setDelDialog] = useState(false);
           text
         </div>
         <div className='md:col-6'>
-        <SearchInputComponent type="text" placeholder="Search by invoice no & client name" />
+          <SearchInputComponent type="text" placeholder="Search by invoice no & client name" />
         </div>
         <div className='md:col-12'>
           <div className='card'>
@@ -75,7 +69,22 @@ const [delDialog, setDelDialog] = useState(false);
           </div>
         </div>
       </div>
-      {/* Dialogs */}
+      {/*Add Edit Dialogs */}
+      {isAddDialog && (
+        <GlobalDialogIndex
+          showHeader={true}
+          visible={isAddDialog}
+          onHide={() => { setIsAddDialog(false); setEditData(null) }}
+          header={editData == null ? "Add New Invoice" : "Edit Invoice"}
+          draggable={false}
+          breakpoints={{ "960px": "80vw", "640px": "90vw" }}
+          style={{ width: "40vw" }}
+          component={<AddEditInvoice editData={editData} onHide={() => { setIsAddDialog(false); setEditData(null) }} />}
+        />
+      )
+      }
+      {/*Del Dialogs */}
+
       {delDialog && (
         <GlobalDialogIndex
           showHeader={true}
