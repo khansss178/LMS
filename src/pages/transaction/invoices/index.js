@@ -1,19 +1,28 @@
 import React, { useState } from 'react'
+
+// Prime React
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
 import { BsTrash } from 'react-icons/bs';
 import { FaRegEdit } from "react-icons/fa";
-import SearchInputComponent from '../../../ui-components/searchinputcomponent';
+import { BreadCrumb } from "primereact/breadcrumb";
+// Ui-Components
 import GlobalDialogIndex from '../../../ui-components/globaldialoge';
 import DeleteDialog from './component/deletedialog';
 import AddEditInvoice from './component';
+import GlobalInputField from '../../../ui-components/globalinputfield';
+import SecondaryButton from '../../../ui-components/secondarybutton';
+import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
+// Css 
+import "./invoices.scss"
+import GlobalCheckbox from '../../../ui-components/globalcheckbox';
 
 const InvoicesView = () => {
   const data = [{ invoiceNo: "test", scheduleno: "temp", clientName: "12PKR", debtorName: "tester", invoiceDate: "12/12/2023", fundingDate: "12/12/2023", status: "Pending", invoiceAmount: "$ 19.00" }]
 
 
   // States
+  const [showAll, setShowAll] = useState(false);
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
   const [delDialog, setDelDialog] = useState(false);
@@ -44,15 +53,48 @@ const InvoicesView = () => {
       </>
     );
   }
+  // Bredcrumb
+  const items = [{ label: `Invoices` }];
+  const home = { icon: 'pi pi-home', to: '/InvoicesView' };
   return (
     <>
+      <div className="">
+        <BreadCrumb model={items} home={home} />
+      </div>
+      <div className="grid">
+        <div className="md:col-8">
+          <div className="terminated_check_styles">
+            <GlobalCheckbox name="include_terminated" id="include_terminated" checked={showAll} onChange={(e) => setShowAll(e.checked)} />
+            Include Terminated
+          </div>
+        </div>
+        <div className="md:col-4 col-12">
+          <div className="equal_space inlineFlex">
+            <GlobalInputField
+              id="searchField"
+              name="searchField"
+              type="text"
+              placeholder="Search..."
+              className="input_position"
+            />
+            <div>
+              <SecondaryButton
+                label="Add New Invoice"
+                type="button"
+                onClick={() => setIsAddDialog(true)}
+                style={{ width: "120px", height: "36px", marginTop: "5px" }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className='grid'>
-        <div className='md:col-6'>
+        {/* <div className='md:col-6'>
           text
         </div>
         <div className='md:col-6'>
           <SearchInputComponent type="text" placeholder="Search by invoice no & client name" />
-        </div>
+        </div> */}
         <div className='md:col-12'>
           <div className='card'>
             <DataTable filter value={data} responsiveLayout="scroll" key="_id">
