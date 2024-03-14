@@ -173,10 +173,10 @@ label {
 }
 
 .p-breadcrumb {
-    background: #ffffff;
+    background: transparent;
     border: 0 !important;
     border-radius: 3px;
-    padding: 1.3rem !important;
+    padding: 0.8rem !important;
 }
 
 .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link {
@@ -188,7 +188,11 @@ label {
     /* font-weight: 500; */
 }
 
-.p-breadcrumb .p-breadcrumb-list li .p-menuitem-link:focus {
+// .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link:focus {
+//     box-shadow: none !important;
+// }
+
+.p-breadcrumb ul li .p-menuitem-link:focus {
     box-shadow: none !important;
 }
 

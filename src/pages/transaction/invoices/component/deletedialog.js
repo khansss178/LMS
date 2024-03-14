@@ -12,7 +12,7 @@ const DeleteDialog = (props) => {
                 <BsTrash />
             </div>
             <div className={"delete_header"}>
-                <h5>Delete Ticket</h5>
+                <h5>Delete Invoice</h5>
                 <p>Are you sure you want to delete this?</p>
             </div>
             <div className={"delete_button"}>

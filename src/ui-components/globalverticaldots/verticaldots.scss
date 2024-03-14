@@ -42,10 +42,13 @@
     border-radius: 12px;
     position: absolute;
     background-color: white !important;
+    // min-width: auto !important;
   
     /* text-align: center; */
   }
-  
+  .p-menu.p-menu-overlay{
+    min-width: max-content !important;
+  }
   .kebab_menu_border li {
     margin-bottom: 0.5rem;
   }
