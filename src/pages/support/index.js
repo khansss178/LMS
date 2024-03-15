@@ -29,12 +29,11 @@ const SupportView = () => {
 
 
   // States
-  // const [showAll, setShowAll] = useState(false);
+ 
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
   const [delDialog, setDelDialog] = useState(false);
-  // const [ischangestatus, setIsChangeStatus] = useState(false);
-
+  
   const kebabMenuItems = [
     { id: 1, title: "Edit", icon: <FaRegEdit /> },
     { id: 2, title: "Delete", icon: <BsTrash /> },
