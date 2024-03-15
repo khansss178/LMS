@@ -1,48 +1,96 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from 'react'
+import { useFormik } from "formik";
+import * as Yup from 'yup';
+// import { useHistory } from "react-router-dom";
 import { Button } from "primereact/button";
 // import { loginAction } from "../../redux/actions/authAction";
 // import LogoImage from "../../Images/js_connect_logo_main@2x.png";
 import "./Login.css";
+import { resetChangeStatus, loginUser } from "../../redux/auth_slice/login_user_slice";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from 'react-toastify';
+// import classNames from 'classnames';
 
 const Login = () => {
-    const [username, setusername] = useState("");
-    const [password, setpassword] = useState("");
-    const [loading, setloading] = useState(false);
-    const [loadingIcon, setloadingIcon] = useState("");
+    // const [username, setusername] = useState("");
+    // const [password, setpassword] = useState("");
+    //redux
+    const { success, error, loading } = useSelector((state) => state.loginUser);
 
-    let history = useHistory();
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setloading(true);
-        setloadingIcon("pi pi-spin pi-spinner");
-        const data = {
-            userName: username,
-            password: password,
-        };
-        // const res = await dispatch(loginAction(data));
-        setloading(false);
-        setloadingIcon("");
-        // if (res?.login)
-        localStorage.setItem("login", "true");
-        history.push("/dashboard");
+    //hooks
+
+    useEffect(() => {
+        if (success !== undefined) {
+            if (success === true) {
+                toast.success('successfully logged in');
+            } else {
+                toast.warn(error)
+            }
+
+        }
+        return () => {
+
+            dispatch((resetChangeStatus))
+        }
+
+    }, [success]);
+
+    const dispatch = useDispatch();
+
+    //forms
+    const validationSchema = Yup.object().shape({
+
+        password: Yup.string().required("Password is required.").min(8, 'Minimum length should be 8'),
+        username: Yup.string().required("Email is required."),
+
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            password: "",
+        },
+        validationSchema: validationSchema,
+        onSubmit: async (data) => {
+            dispatch(loginUser(data));
+            console.log(data);
+
+        },
+    });
+    // const history = useHistory();
+    const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
+    const getFormErrorMessage = (name) => {
+        return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
     };
     return (
         <div className="login_body">
             <div align="center" style={{ marginTop: "4%", marginBottom: "1%" }}>
                 <img src="" alt="" width={"50%"} />
             </div>
-            <div class="container" id="container">
+            <div className="container" id="container">
                 <div class="form-container sign-in-container">
-                    <form action="#" className="login_form">
+                    <form className="login_form" onSubmit={formik.handleSubmit}>
                         <div className="p-mb-4">
                             <h1 className="login_h1">Login</h1>
                         </div>
                         <div className="p-mt-4">
-                            <input className="login_input" value={username} onChange={(e) => setusername(e.target.value)} type="text" placeholder="User Name" />
-                            <input className="login_input" value={password} onChange={(e) => setpassword(e.target.value)} type="password" placeholder="Password" />
+                            <div className="user_Email-Name">
+                                <label><b>Username</b></label>
+                                <input id='username' name='username' value={formik.values.username} onChange={formik.handleChange} autoFocus className="login_input" type="text" placeholder="User Name" />
+                                {getFormErrorMessage('username')}
+                            </div>
+                            <div className="user_Email-Name">
+                                <label><b>Password</b></label>
+                                <input className="login_input input_pass"
+                                    value={formik.values.password} onChange={formik.handleChange}
+                                    name="password" id="password"
+                                    type="password"
+                                    placeholder="Enter Password Here!"
+                                />
+                                {getFormErrorMessage("password")}
+                            </div>
                             <div className="p-mt-2">
-                                <Button className="login_button" label="Login" icon={loadingIcon || ""} iconPos="right" disabled={loading} onClick={handleLogin} />
+                                <Button className="login_button" label="Login" loading={loading} type="submit" />
                             </div>
                         </div>
                     </form>
