@@ -9,7 +9,6 @@ import { BreadCrumb } from "primereact/breadcrumb";
 // Ui-Components
 import GlobalDialogIndex from '../../../ui-components/globaldialoge';
 import DeleteDialog from './component/deletedialog';
-import AddEditInvoice from './component';
 import GlobalInputField from '../../../ui-components/globalinputfield';
 import SecondaryButton from '../../../ui-components/secondarybutton';
 import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
