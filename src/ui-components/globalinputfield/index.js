@@ -60,3 +60,4 @@ const GlobalInputField = (props) => {
   );
 };
 export default GlobalInputField;
+

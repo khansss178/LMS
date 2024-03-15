@@ -16,6 +16,7 @@ import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
 // Css 
 import "./invoices.scss"
 import GlobalCheckbox from '../../../ui-components/globalcheckbox';
+import ChangeStatusModal from './component/changestatusmodal';
 
 const InvoicesView = () => {
   const data = [{ invoiceNo: "test", scheduleno: "temp", clientName: "12PKR", debtorName: "tester", invoiceDate: "12/12/2023", fundingDate: "12/12/2023", status: "Pending", invoiceAmount: "$ 19.00" }]
@@ -26,8 +27,20 @@ const InvoicesView = () => {
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
   const [delDialog, setDelDialog] = useState(false);
+  const [ischangestatus, setIsChangeStatus] = useState(false);
 
-  // Action Template
+
+  // Filter Kbab Menu Template
+  const kebabMenuFilterItems = [
+    { id: 1, title: "Change Statues", icon: <FaRegEdit /> },
+
+  ];
+  const handleOpenMenuFilterItems = (status) => {
+
+    if (status === 1) {
+      setIsChangeStatus(true);
+    }
+  };
   const kebabMenuItems = [
     { id: 1, title: "Edit", icon: <FaRegEdit /> },
     { id: 2, title: "Delete", icon: <BsTrash /> },
@@ -78,6 +91,13 @@ const InvoicesView = () => {
               className="input_position"
             />
             <div>
+              <GlobalVerticalDots
+                btnclr={true}
+                items={kebabMenuFilterItems}
+                handleMenuOpen={handleOpenMenuFilterItems}
+              />
+            </div>
+            <div>
               <SecondaryButton
                 label="Add New Invoice"
                 type="button"
@@ -89,12 +109,6 @@ const InvoicesView = () => {
         </div>
       </div>
       <div className='grid'>
-        {/* <div className='md:col-6'>
-          text
-        </div>
-        <div className='md:col-6'>
-          <SearchInputComponent type="text" placeholder="Search by invoice no & client name" />
-        </div> */}
         <div className='md:col-12'>
           <div className='card'>
             <DataTable filter value={data} responsiveLayout="scroll" key="_id">
@@ -111,6 +125,20 @@ const InvoicesView = () => {
           </div>
         </div>
       </div>
+      {/*Filter Change Status Dialogs */}
+      {ischangestatus && (
+        <GlobalDialogIndex
+          showHeader={true}
+          visible={ischangestatus}
+          onHide={() => { setIsChangeStatus(false)}}
+          header={"Change Status"}
+          draggable={false}
+          breakpoints={{ "960px": "80vw", "640px": "90vw" }}
+          style={{ width: "30vw" }}
+          component={<ChangeStatusModal onHide={() => { setIsChangeStatus(false) }} />}
+        />
+      )
+      }
       {/*Add Edit Dialogs */}
       {isAddDialog && (
         <GlobalDialogIndex

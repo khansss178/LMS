@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
-import { Route, useLocation } from "react-router-dom";
+import { Route, useLocation ,Switch} from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
 import { AppTopbar } from "./AppTopbar";
@@ -33,6 +33,7 @@ import InvoicesView from "./pages/transaction/invoices";
 import ScheduleOfAssignment from "./pages/transaction/scheduleofassignment";
 import ClientRequest from "./pages/creditrequest/clientrequest";
 import DebtorRequest from "./pages/creditrequest/debtorrequest";
+import { useSelector } from "react-redux";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");
@@ -218,47 +219,55 @@ const App = () => {
         "p-ripple-disabled": ripple === false,
         "layout-theme-light": layoutColorMode === "light",
     });
-
+    const loginUser = useSelector((state) => state.loginUser);
+    const { user } = loginUser;
     return (
-        <div className={wrapperClass} onClick={onWrapperClick}>
-            <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
+        <>
 
-            {!localStorage.getItem("login") === true ? (
-                <Route path="/" component={Login} />
-            ) : (
-                <>
+            {
+                user === undefined ?
+                    // <>
+                    <Switch>
 
-                    <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode} mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />
-                    <div className="layout-sidebar" onClick={onSidebarClick}>
-                        <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
-                    </div>
-                    <div className="layout-main-container">
-                        <div className="layout-main">
-                            {/* //Dashboard */}
-                            <Route path="/dashboard" component={Dashboard} />
-                            {/* Transactions */}
-                            <Route path="/invoices" component={InvoicesView} />
-                            <Route path="/scheduleofassignment" component={ScheduleOfAssignment} />
-                            {/* Credit Request */}
-                            <Route path="/clientrequest" component={ClientRequest} />
-                            <Route path="/debtorrequest" component={DebtorRequest} />
+                        <Route path="/" component={Login} />
+                    </Switch>
+                    // </>
+                    : <div className={wrapperClass} onClick={onWrapperClick}>
+                        <ToastContainer />
+                        <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
-                            {/* UserManagement */}
-                            <Route path="/usermanagement" component={UserManagement} />
-                            {/* Support */}
-                            <Route path="/support" component={SupportView} />
+                        <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode} mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick} />
+                        <div className="layout-sidebar" onClick={onSidebarClick}>
+                            <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
                         </div>
-                        <AppFooter layoutColorMode={layoutColorMode} />
-                    </div>
-                </>
-            )}
+                        <div className="layout-main-container">
+                            <div className="layout-main">
+                                {/* //Dashboard */}
+                                <Route path="/dashboard" component={Dashboard} />
+                                {/* Transactions */}
+                                <Route path="/invoices" component={InvoicesView} />
+                                <Route path="/scheduleofassignment" component={ScheduleOfAssignment} />
+                                {/* Credit Request */}
+                                <Route path="/clientrequest" component={ClientRequest} />
+                                <Route path="/debtorrequest" component={DebtorRequest} />
 
-            <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange} layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
+                                {/* UserManagement */}
+                                <Route path="/usermanagement" component={UserManagement} />
+                                {/* Support */}
+                                <Route path="/support" component={SupportView} />
+                            </div>
+                            <AppFooter layoutColorMode={layoutColorMode} />
+                        </div>
 
-            <CSSTransition classNames="layout-mask" timeout={{ enter: 200, exit: 200 }} in={mobileMenuActive} unmountOnExit>
-                <div className="layout-mask p-component-overlay"></div>
-            </CSSTransition>
-        </div>
+                        <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange} layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
+
+                        <CSSTransition classNames="layout-mask" timeout={{ enter: 200, exit: 200 }} in={mobileMenuActive} unmountOnExit>
+                            <div className="layout-mask p-component-overlay"></div>
+                        </CSSTransition>
+                    </div >
+            }
+        </>
+
     );
 };
 
