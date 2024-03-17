@@ -1,16 +1,23 @@
-import appURL from '../constants/appURL';
-
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const appURL = require('../constants/appURL');
 const axios = require('axios');
+
+app.use(cors()); // Enable CORS for all routes
+
 const axiosApi = axios.create();
 
 // Request interceptor for API calls
 axiosApi.interceptors.request.use(
   async config => {
-    const access_token = localStorage.getItem('accessToken')
+    const access_token = localStorage.getItem('data')
     config.headers = {
       'Authorization': `Bearer ${access_token}`,
       'Accept': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': ' application/json',
+    //   'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': '*' // Add CORS header here
     }
     return config;
   },
@@ -32,9 +39,6 @@ axiosApi.interceptors.response.use((response) => {
   return Promise.reject(error);
 });
 
-
-
-
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
   if (refreshToken) {
@@ -46,11 +50,6 @@ const refreshAccessToken = async () => {
   } else {
     return '';
   }
-
-
 }
 
-
-
-
-export { axiosApi }
+module.exports = { app, axiosApi };
