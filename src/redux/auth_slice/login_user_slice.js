@@ -24,15 +24,12 @@ const loginUserReducer = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 localStorage.setItem("user", JSON.stringify(action.payload));
-                // localStorage.setItem('accessToken',action.payload.token);
-                //localStorage.setItem('refreshToken',action.payload.refreshToken);
-
                 return { loading: false, user: action.payload }
             })
             .addCase(loginUser.rejected, (state, action) => {
                 return {
                     loading: false,
-                    success:false,
+                    success: false,
                     error: action.payload
                 }
             });
@@ -40,14 +37,14 @@ const loginUserReducer = createSlice({
 });
 
 export default loginUserReducer.reducer;
-export const {resetChangeStatus, logout } = loginUserReducer.actions;
+export const { resetChangeStatus, logout } = loginUserReducer.actions;
 
 // Thunks
 export const loginUser = createAsyncThunk('loginUser/fetch', async (body, { rejectWithValue, fulfillWithValue }) => {
     try {
         const { data } = await Axios.post(appURL.baseUrl + appURL.adminLogin, body);
         return fulfillWithValue(data.data);
-        
+
     } catch (error) {
         throw rejectWithValue(error.response && error.response.data.msg
             ? error.response.data.msg

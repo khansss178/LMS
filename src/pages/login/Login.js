@@ -68,7 +68,7 @@ const Login = () => {
                 <img src="" alt="" width={"50%"} />
             </div>
             <div className="container" id="container">
-                <div class="form-container sign-in-container">
+                <div className="form-container sign-in-container">
                     <form className="login_form" onSubmit={formik.handleSubmit}>
                         <div className="p-mb-4">
                             <h1 className="login_h1">Login</h1>
@@ -95,9 +95,9 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
-                <div class="overlay-container">
-                    <div class="overlay">
-                        <div class="overlay-panel overlay-right">
+                <div className="overlay-container">
+                    <div className="overlay">
+                        <div className="overlay-panel overlay-right">
                             <h1 className="login_h1">Welcome!</h1>
                             <p className="login_p">Please login to access TEEK Portal</p>
                         </div>
