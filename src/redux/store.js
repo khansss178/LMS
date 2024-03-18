@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import loginUserReducer from "./auth_slice/login_user_slice"
+import support_slice from './auth_slice/support_slice';
 
 const user = localStorage.getItem("user");
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
 const store = configureStore({
     reducer: {
         loginUser: loginUserReducer,
+        supportMainList:support_slice,
 
     },
     preloadedState: initialState
