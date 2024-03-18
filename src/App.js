@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
-import { Route, useLocation ,Switch} from "react-router-dom";
+import { Route, useLocation, Switch } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
 import { AppTopbar } from "./AppTopbar";
@@ -149,7 +149,7 @@ const App = () => {
                 {
                     label: "Dashboard",
                     icon: "pi pi-fw pi-home",
-                    to: "/dashboard",
+                    to: "/",
                 },
             ],
         },
@@ -223,15 +223,16 @@ const App = () => {
     const { user } = loginUser;
     return (
         <>
-
             {
                 user === undefined ?
-                    // <>
-                    <Switch>
-
-                        <Route path="/" component={Login} />
-                    </Switch>
-                    // </>
+                    <>
+                        <ToastContainer />
+                        <Switch>
+                            <Route path="/" exact component={Login} />
+                            {/* <Route path='/' exact component={LoginScreen} /> */}
+                            <Route path='*' component={Login} />
+                        </Switch>
+                    </>
                     : <div className={wrapperClass} onClick={onWrapperClick}>
                         <ToastContainer />
                         <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
@@ -243,18 +244,18 @@ const App = () => {
                         <div className="layout-main-container">
                             <div className="layout-main">
                                 {/* //Dashboard */}
-                                <Route path="/dashboard" component={Dashboard} />
+                                <Route path="/" exact component={Dashboard} />
                                 {/* Transactions */}
-                                <Route path="/invoices" component={InvoicesView} />
-                                <Route path="/scheduleofassignment" component={ScheduleOfAssignment} />
+                                <Route path="/invoices" exact component={InvoicesView} />
+                                <Route path="/scheduleofassignment" exact component={ScheduleOfAssignment} />
                                 {/* Credit Request */}
-                                <Route path="/clientrequest" component={ClientRequest} />
-                                <Route path="/debtorrequest" component={DebtorRequest} />
+                                <Route path="/clientrequest" exact component={ClientRequest} />
+                                <Route path="/debtorrequest" exact component={DebtorRequest} />
 
                                 {/* UserManagement */}
-                                <Route path="/usermanagement" component={UserManagement} />
+                                <Route path="/usermanagement" exact component={UserManagement} />
                                 {/* Support */}
-                                <Route path="/support" component={SupportView} />
+                                <Route path="/support" exact component={SupportView} />
                             </div>
                             <AppFooter layoutColorMode={layoutColorMode} />
                         </div>

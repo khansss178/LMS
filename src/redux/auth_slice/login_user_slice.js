@@ -24,7 +24,7 @@ const loginUserReducer = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 localStorage.setItem("user", JSON.stringify(action.payload));
-                return { loading: false, user: action.payload }
+                return { loading: false, user: action.payload, }
             })
             .addCase(loginUser.rejected, (state, action) => {
                 return {
@@ -46,8 +46,8 @@ export const loginUser = createAsyncThunk('loginUser/fetch', async (body, { reje
         return fulfillWithValue(data.data);
 
     } catch (error) {
-        throw rejectWithValue(error.response && error.response.data.msg
-            ? error.response.data.msg
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
 
     }
