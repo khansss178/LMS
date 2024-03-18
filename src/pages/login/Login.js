@@ -1,48 +1,21 @@
 import React, { useEffect } from 'react'
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-// import { useHistory } from "react-router-dom";
 import { Button } from "primereact/button";
-// import { loginAction } from "../../redux/actions/authAction";
 // import LogoImage from "../../Images/js_connect_logo_main@2x.png";
 import "./Login.css";
 import { resetChangeStatus, loginUser } from "../../redux/auth_slice/login_user_slice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from 'react-toastify';
-// import classNames from 'classnames';
 
 const Login = () => {
-    // const [username, setusername] = useState("");
-    // const [password, setpassword] = useState("");
+    const dispatch = useDispatch();
     //redux
     const { success, error, loading } = useSelector((state) => state.loginUser);
-
-    //hooks
-
-    useEffect(() => {
-        if (success !== undefined) {
-            if (success === true) {
-                toast.success('successfully logged in');
-            } else {
-                toast.warn(error)
-            }
-
-        }
-        return () => {
-
-            dispatch((resetChangeStatus))
-        }
-
-    }, [success]);
-
-    const dispatch = useDispatch();
-
     //forms
     const validationSchema = Yup.object().shape({
-
         password: Yup.string().required("Password is required.").min(8, 'Minimum length should be 8'),
-        username: Yup.string().required("Email is required."),
-
+        username: Yup.string().required("Username is required."),
     });
 
     const formik = useFormik({
@@ -53,11 +26,32 @@ const Login = () => {
         validationSchema: validationSchema,
         onSubmit: async (data) => {
             dispatch(loginUser(data));
-            console.log(data);
-
         },
     });
-    // const history = useHistory();
+    //hooks
+
+    // useEffect(() => {
+    //     if (success !== undefined) {
+    //         if (success === true) {
+    //             toast.success('successfully logged in');
+    //         } else {
+    //             toast.warn(error)
+    //         }
+    //     }
+    //     return () => {
+
+    //         dispatch((resetChangeStatus))
+    //     }
+
+    // }, [success]);
+    useEffect(() => {
+        if (success === true) {
+            toast.success('Successfully logged in');
+            dispatch(resetChangeStatus());
+        } else if (error) {
+            toast.error(error);
+        }
+    }, [success, error, dispatch]);
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
     const getFormErrorMessage = (name) => {
         return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
