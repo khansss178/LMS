@@ -17,6 +17,7 @@ const AddEditTicket = (props) => {
     //Redux Selector
     const addSupportReducer = useSelector((state) => state.supportMainList);
     const { addLoading, addSuccess, addError } = addSupportReducer;
+    
     //Redux Selector End
 
 
@@ -41,11 +42,23 @@ const AddEditTicket = (props) => {
         onSubmit: async (data) => {
 
             console.log(data, "Add Data");
+            const payload = {
+                id: 0, // Assuming id is always 0 for new entries
+                title: data.ticketTitle,
+                ticket_type_text: data.ticketType.name,
+                created_at: new Date().toISOString(), // You may adjust this based on your requirements
+                resolution_date: null, // You may adjust this based on your requirements
+                createdby: null, // You may adjust this based on your requirements
+                assignedto: data.assign_To || null, // If assign_To is null, it will be set to null in the payload
+                priority_text: data.priority.name,
+                status_text: null // You may adjust this based on your requirements
+            };
+            console.log(payload, "Add Data");
             // return
             // dispatch(addSupport(data))
             if (editData === null) {
                 dispatch(addSupport(data));
-            } 
+            }
             // else {
             //     data['id'] = editData.id;
             //     dispatch(updateSupport(data));
@@ -92,9 +105,9 @@ const AddEditTicket = (props) => {
         { name: "Islam", status: "IS" },
     ];
 
-    // useEffect(() => {
-    //     dispatch(getSupportList());
-    // }, []);
+    useEffect(() => {
+        dispatch(getSupportList());
+    }, []);
 
     //Formik Error
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
