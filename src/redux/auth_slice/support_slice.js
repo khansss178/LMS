@@ -30,40 +30,40 @@ const supportMainList = createSlice({
                 }
             });
 
-        // builder
-        //     .addCase(addDepCategory.pending, (state, action) => {
-        //         return { ...state, changeLoading: true }
-        //     })
-        //     .addCase(addDepCategory.fulfilled, (state, action) => {
+        builder
+            .addCase(addSupport.pending, (state, action) => {
+                return { ...state, addLoading: true }
+            })
+            .addCase(addSupport.fulfilled, (state, action) => {
 
-        //         return { ...state, changeLoading: false, changeData: action.payload, changeSuccess: true }
-        //     })
-        //     .addCase(addDepCategory.rejected, (state, action) => {
+                return { ...state, addLoading: false, addData: action.payload, addSuccess: true }
+            })
+            .addCase(addSupport.rejected, (state, action) => {
 
-        //         return {
-        //             ...state,
-        //             changeLoading: false,
-        //             changeError: action.payload,
-        //             changeSuccess: false
-        //         }
-        //     });
-        // builder
-        //     .addCase(updateDepCategory.pending, (state, action) => {
-        //         return { ...state, updateLoading: true }
-        //     })
-        //     .addCase(updateDepCategory.fulfilled, (state, action) => {
+                return {
+                    ...state,
+                    addLoading: false,
+                    addError: action.payload,
+                    addSuccess: false
+                }
+            });
+        builder
+            .addCase(updateSupport.pending, (state, action) => {
+                return { ...state, updateLoading: true }
+            })
+            .addCase(updateSupport.fulfilled, (state, action) => {
 
-        //         return { ...state, updateLoading: false, updateData: action.payload, updateSuccess: true }
-        //     })
-        //     .addCase(updateDepCategory.rejected, (state, action) => {
+                return { ...state, updateLoading: false, updateData: action.payload, updateSuccess: true }
+            })
+            .addCase(updateSupport.rejected, (state, action) => {
 
-        //         return {
-        //             ...state,
-        //             updateLoading: false,
-        //             updateError: action.payload,
-        //             updateSuccess: false
-        //         }
-        //     });
+                return {
+                    ...state,
+                    updateLoading: false,
+                    updateError: action.payload,
+                    updateSuccess: false
+                }
+            });
 
     },
 });
@@ -87,29 +87,30 @@ export const getSupportList = createAsyncThunk('supportlist/fetch', async (id, {
     }
 
 });
-// export const addDepCategory = createAsyncThunk('complaintCategory/add', async (body, { rejectWithValue, fulfillWithValue }) => {
-//     try {
-//         const { data } = await Axios.post(appURL.baseUrl + appURL.addDepCategory, body);
-//         return fulfillWithValue(data.data);
-//     } catch (error) {
+export const addSupport = createAsyncThunk('addSupportTicket/add', async (body, { rejectWithValue, fulfillWithValue }) => {
+    try {
+        const { data } = await Axios.post(appURL.baseUrl + appURL.addSupport, body);
 
-//         throw rejectWithValue(error.response && error.response.data.msg
-//             ? error.response.data.msg
-//             : error.message)
+        return fulfillWithValue(data.data);
+    } catch (error) {
+        console.log("object", error)
+        throw rejectWithValue(error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message)
 
-//     }
+    }
 
-// });
-// export const updateDepCategory = createAsyncThunk('updateDepCategory/patch', async (body, { rejectWithValue, fulfillWithValue }) => {
-//     try {
-//         const { data } = await Axios.patch(appURL.baseUrl + appURL.updateDepCategory, body);
-//         return fulfillWithValue(data.data);
-//     } catch (error) {
+});
+export const updateSupport = createAsyncThunk('updateSupport/patch', async (body, { rejectWithValue, fulfillWithValue }) => {
+    try {
+        const { data } = await Axios.patch(appURL.baseUrl + appURL.updateSupport, body);
+        return fulfillWithValue(data.data);
+    } catch (error) {
 
-//         throw rejectWithValue(error.response && error.response.data.msg
-//             ? error.response.data.msg
-//             : error.message)
+        throw rejectWithValue(error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message)
 
-//     }
+    }
 
-// });
+});
