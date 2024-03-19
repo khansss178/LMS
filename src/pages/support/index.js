@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 //Css
 import "./support.scss"
 //Prime Component
@@ -13,48 +13,49 @@ import SecondaryButton from '../../ui-components/secondarybutton';
 import GlobalDialogIndex from '../../ui-components/globaldialoge';
 import AddEditTicket from './component';
 import DeleteDialog from './component/deletedialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSupportList } from '../../redux/auth_slice/support_slice';
 const SupportView = () => {
-  const data = [
-    {
-      id: 277,
-      "title": "SQA",
-      "ticket_type_text": "Feedback",
-      "priority_text": "High",
-      "status_text": "Open",
-      "assignedto": "CA AS",
-      "createdby": "Amna",
-      "created_at": "2023-11-30",
-      "resolution_date": "2024-01-20",
-    }]
+  const dispatch = useDispatch();
 
+  //Redux Selector
+  const supportReducer = useSelector((state) => state.supportMainList);
+ 
+  const { data } = supportReducer;
+  useEffect(() => {
+    dispatch(getSupportList());
+
+  }, [dispatch]);
 
   // States
- 
+
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
   const [delDialog, setDelDialog] = useState(false);
-  
+
   const kebabMenuItems = [
     { id: 1, title: "Edit", icon: <FaRegEdit /> },
     { id: 2, title: "Delete", icon: <BsTrash /> },
   ];
-  const handleOpenMenuItems = (status) => {
+  const handleOpenMenuItems = (status,rowData) => {
 
     if (status === 1) {
       setIsAddDialog(true);
-      setEditData("Edit")
+      setEditData("Edit");
+      setEditData(rowData);
     } else if (status === 2) {
       setDelDialog(true);
 
     }
   };
-  const actionTemplate = () => {
+  const actionTemplate = (rowData) => {
     return (
       <>
         <GlobalVerticalDots
           items={kebabMenuItems}
-          handleMenuOpen={handleOpenMenuItems}
+          handleMenuOpen={(status) => handleOpenMenuItems(status, rowData)} 
           btnclr={false}
+          
         />
       </>
     );
@@ -95,7 +96,7 @@ const SupportView = () => {
       <div className='grid'>
         <div className='md:col-12'>
           <div className='card'>
-            <DataTable filter value={data} responsiveLayout="scroll" key="_id">
+            <DataTable filter value={data} responsiveLayout="scroll" key="id">
               <Column field="title" header="Ticket Title"></Column>
               <Column field="ticket_type_text" header="Ticket Type"></Column>
               <Column field="priority_text" header="Priority"></Column>

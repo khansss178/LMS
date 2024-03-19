@@ -5,7 +5,7 @@ import "./globaltextarea.scss";
 import { InputTextarea } from "primereact/inputtextarea";
 
 const GlobalTextarea = (props) => {
-  const { value, onChange, rows, cols, style, placeholder, label, isRequired, disabled } =
+  const { value, onChange, rows, cols, style, placeholder, label, isRequired, disabled, name, id } =
     props;
   return (
     <>
@@ -18,6 +18,8 @@ const GlobalTextarea = (props) => {
         </div>
       )}
       <InputTextarea
+        name={name}
+        id={id}
         className={"textarea_style"}
         value={value}
         onChange={onChange}
