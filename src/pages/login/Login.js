@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { Button } from "primereact/button";
-// import LogoImage from "../../Images/js_connect_logo_main@2x.png";
 import "./Login.css";
 import { resetChangeStatus, loginUser } from "../../redux/auth_slice/login_user_slice";
 import { useDispatch, useSelector } from "react-redux";
