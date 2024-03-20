@@ -12,15 +12,15 @@
     --footer-text: #2b2f38;
 }
 .container {
-    background-color: #fff;
+        background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-shadow: 0px 0px 14px 2px #ccc;
     position: relative;
     overflow: hidden;
     width: 800px;
     max-width: 100%;
     min-height: 400px;
-    padding: 15px;
+    padding: 40px 15px 15px 15px;
 }
 .custom_margin_top {
     text-align: center;
@@ -62,10 +62,10 @@
 }
 .background_image {
     /* background-image: url(../../Images/login_background_New.jpg); */
-    background-size: cover;
+/*     background-size: cover;
     background-repeat: no-repeat;
     overflow-x: hidden;
-    height: 100vh;
+    height: 100vh; */
 }
 .RegisterNow {
     background-size: cover;
@@ -78,10 +78,12 @@
     font-weight: 700;
     font-size: 20px;
     margin: 0px 0px 5px 0px;
+    text-align:center;
 }
 .sign_text {
     font-size: 13px;
     color: var(--text-forget);
+    text-align:center;
 }
 .sign_in_btn {
     background-color: var(--primary-button-color) !important;
