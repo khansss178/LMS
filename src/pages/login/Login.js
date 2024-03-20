@@ -101,7 +101,7 @@ const Login = () => {
                                         </div>
                                     </div>
                                     <div className="flex flex-row justify-content-center mt-5 mt-2">
-                                        <Button className="btn sign_in_btn" label="Login" loading={loading} type="submit" />
+                                        <Button className="btn sign_in_btn" label="Login" loading={loading} type="submit" iconPos="right" />
                                     </div>
                                 </div>
                             </form>
