@@ -244,6 +244,7 @@
         padding: 15px;
         opacity: 1;
         z-index: 999;
+        margin:45% auto 0 auto !important ;
     }
 }
 @media (max-width: 1919px) and (min-width: 1366px) {
