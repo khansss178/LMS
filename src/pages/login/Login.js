@@ -61,8 +61,8 @@ const Login = () => {
     return (
         <div className="background_image container-fluid">
             <div className="grid pr-5">
-                <div className="lg:col-8 md:col-6"></div>
-                <div className="lg:col-4 md:col-6 col-12">
+                <div className="lg:col-4 md:col-4"></div>
+                <div className="lg:col-4 md:col-4 col-12">
                     <div className="container" style={{marginTop:"20%"}}>
                         <p className="sign_in_text">Sign In</p>
                         <p className="sign_text">Enter your Email & Password to Login</p>
@@ -108,7 +108,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-
+<div class="lg:col-4 md:col-4"></div>
             </div>
 
         </div>
