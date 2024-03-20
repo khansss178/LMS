@@ -61,10 +61,10 @@
     display: none;
 }
 .background_image {
-    /* background-image: url(../../Images/login_background_New.jpg); */
-/*     background-size: cover;
+    background-image: url(../../Images/bg-img.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh; */
+    height: 100vh;
     overflow-x: hidden;
 }
 .login_h1{
