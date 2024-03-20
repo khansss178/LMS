@@ -114,7 +114,7 @@ const UserManagement = () => {
               responsiveLayout="scroll"
               key="id"
               rows={16}
-              emptyMessage="No record found."
+              emptyMessage="No record available."
               paginator
               filters={filters}
               globalFilterFields={["fullName", "userName", "emailAddress", "isActive", "role"]}
