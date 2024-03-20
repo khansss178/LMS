@@ -79,7 +79,7 @@ const Login = () => {
                                         </div>
 
                                         <div>
-                                            <InputText id='username' name='username' value={formik.values.username} onChange={formik.handleChange} autoFocus className="login_input" type="text" placeholder="User Name" />
+                                            <InputText id='username' name='username' value={formik.values.username} onChange={formik.handleChange} autoFocus className="login_input" type="text" placeholder="Enter Email" />
                                             {getFormErrorMessage('username')}
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@ const Login = () => {
                                                 value={formik.values.password} onChange={formik.handleChange}
                                                 name="password" id="password"
                                                 type="password"
-                                                placeholder="Enter Password Here!"
+                                                placeholder="Enter Password"
                                                 toggleMask
                                             />
                                             {getFormErrorMessage("password")}
