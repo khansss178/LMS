@@ -8,7 +8,7 @@ import GlobalVerticalDots from '../../ui-components/globalverticaldots';
 import { FaRegEdit } from 'react-icons/fa';
 import { BsTrash } from 'react-icons/bs';
 import GlobalDialogIndex from '../../ui-components/globaldialoge';
-import GlobalInputSwitch from '../../ui-components/globalinputswitch';
+// import GlobalInputSwitch from '../../ui-components/globalinputswitch';
 import AddEditUser from './component';
 import DeleteDialog from './component/deletedialog';
 
@@ -36,7 +36,7 @@ const UserManagement = () => {
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
   const [delDialog, setDelDialog] = useState(false);
-  const [isInputClick, setIsInputClick] = useState(false);
+  // const [isInputClick, setIsInputClick] = useState(false);
 
   const kebabMenuItems = [
     { id: 1, title: "Edit", icon: <FaRegEdit /> },

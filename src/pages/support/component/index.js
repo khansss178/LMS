@@ -9,6 +9,7 @@ import GlobalTextarea from '../../../ui-components/globaltextarea';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSupport, getSupportList, resetSupportSlice, updateSupport } from '../../../redux/auth_slice/support_slice';
 import { reduxService } from '../../../redux/services/redux_utils';
+import { toast } from 'react-toastify';
 // import { Button } from 'primereact/button';
 
 const AddEditTicket = (props) => {
@@ -17,7 +18,9 @@ const AddEditTicket = (props) => {
     //Redux Selector
     const addSupportReducer = useSelector((state) => state.supportMainList);
     const { addLoading, addSuccess, addError } = addSupportReducer;
-    
+    const editSupportReducer = useSelector((state) => state.supportMainList);
+    const { updateData, updateLoading, updateSuccess, updateError, } = editSupportReducer;
+
     //Redux Selector End
 
 
@@ -27,6 +30,7 @@ const AddEditTicket = (props) => {
         ticketType: Yup.mixed().required("Ticke Type is required"),
         priority: Yup.mixed().required("Priority is required"),
         assign_To: editData === null ? null : Yup.mixed().required("Assign To is required"),
+        status_text: editData === null ? null : Yup.mixed().required("Status is required"),
         ticketDetails: Yup.mixed().required("Ticket Details is required"),
     });
 
@@ -38,37 +42,30 @@ const AddEditTicket = (props) => {
             priority: "",
             assign_To: "",
             ticketDetails: "",
+            status_text: "",
         },
-        onSubmit: async (data) => {
-
-            console.log(data, "Add Data");
+        onSubmit: async (values) => {
             const payload = {
-                id: 0, // Assuming id is always 0 for new entries
-                title: data.ticketTitle,
-                ticket_type_text: data.ticketType.name,
-                created_at: new Date().toISOString(), // You may adjust this based on your requirements
-                resolution_date: null, // You may adjust this based on your requirements
-                createdby: null, // You may adjust this based on your requirements
-                assignedto: data.assign_To || null, // If assign_To is null, it will be set to null in the payload
-                priority_text: data.priority.name,
-                status_text: null // You may adjust this based on your requirements
+                id: values.id,
+                title: values.ticketTitle,
+                ticket_type_text: values.ticketType.name,
+                created_at: new Date().toISOString(),
+                resolution_date: new Date().toISOString(),
+                createdby: "",
+                assignedto: values.assign_To,
+                priority_text: values.priority.name,
+                status_text: values.status_text
             };
-            console.log(payload, "Add Data");
-            // return
-            // dispatch(addSupport(data))
             if (editData === null) {
-                dispatch(addSupport(data));
+                dispatch(addSupport(payload));
+            } else {
+                payload.id = editData.id;
+                dispatch(updateSupport(payload));
+
             }
-            // else {
-            //     data['id'] = editData.id;
-            //     dispatch(updateSupport(data));
-            // }
-
-            // dispatch(addSupport(body));
-
-        },
+        }
     });
-
+    console.log(editData, "Check Edit Data List");
     useEffect(() => {
         reduxService.handleResponse({
             success: addSuccess,
@@ -84,6 +81,24 @@ const AddEditTicket = (props) => {
             }
         });
     }, [dispatch, addSuccess, addError]);
+    useEffect(() => {
+
+        if (updateSuccess !== undefined) {
+            if (updateSuccess === true) {
+                toast.success("Status Updated Successfully");
+                formik.resetForm();
+                onHide();
+                dispatch(getSupportList());
+            } else {
+                toast.error(updateError);
+            }
+        }
+        return () => {
+
+            dispatch(resetSupportSlice());
+        }
+
+    }, [updateData, updateSuccess, updateError]);
 
 
 
@@ -105,9 +120,15 @@ const AddEditTicket = (props) => {
         { name: "Islam", status: "IS" },
     ];
 
+    const statusText = [
+        { name: "Pending", status: "PG" },
+        { name: "Succeded", status: "SD" },
+        { name: "Rejected", status: "RD" },
+    ];
+
     useEffect(() => {
         dispatch(getSupportList());
-    }, []);
+    }, [dispatch]);
 
     //Formik Error
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
@@ -167,21 +188,39 @@ const AddEditTicket = (props) => {
                         </div>
 
                         {editData !== null && (
-                            <div className="col-12 md:col-6 pb-3">
-                                <GlobalDropdown
-                                    label="Assign To"
-                                    id="assign_To"
-                                    name="assign_To"
-                                    options={assignTo}
-                                    optionLabel="name"
-                                    optionValue="status"
-                                    placeholder="Select"
-                                    isRequired
-                                    value={formik.values.assign_To}
-                                    onChange={formik.handleChange}
-                                />
-                                {getFormErrorMessage('assign_To')}
-                            </div>
+                            <>
+                                <div className="col-12 md:col-6 pb-3">
+
+                                    <GlobalDropdown
+                                        label="Assign To"
+                                        id="assign_To"
+                                        name="assign_To"
+                                        options={assignTo}
+                                        optionLabel="name"
+                                        optionValue="status"
+                                        placeholder="Select"
+                                        isRequired
+                                        value={formik.values.assign_To}
+                                        onChange={formik.handleChange}
+                                    />
+                                    {getFormErrorMessage('assign_To')}
+                                </div>
+                                <div className="col-12 md:col-6 pb-3">
+                                    <GlobalDropdown
+                                        label="Status"
+                                        id="status_text"
+                                        name="status_text"
+                                        options={statusText}
+                                        optionLabel="name"
+                                        optionValue="status"
+                                        placeholder="Select"
+                                        isRequired
+                                        value={formik.values.status_text}
+                                        onChange={formik.handleChange}
+                                    />
+                                    {getFormErrorMessage('status_text')}
+                                </div>
+                            </>
                         )}
                         <div className="col-12 col-md-12 pb-3">
                             <GlobalTextarea
