@@ -76,7 +76,7 @@ const Login = () => {
                                     <div className="user_Email-Name  mb-3">
 
                                         <div>
-                                            <label><b>Username</b></label>
+                                            <label><b>Email</b></label>
                                         </div>
 
                                         <div>
