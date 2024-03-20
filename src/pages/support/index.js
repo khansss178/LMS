@@ -15,17 +15,18 @@ import AddEditTicket from './component';
 import DeleteDialog from './component/deletedialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSupportList } from '../../redux/auth_slice/support_slice';
+import { FilterMatchMode } from "primereact/api";
 const SupportView = () => {
   const dispatch = useDispatch();
 
   //Redux Selector
   const supportReducer = useSelector((state) => state.supportMainList);
- 
+
   const { data } = supportReducer;
   useEffect(() => {
     dispatch(getSupportList());
 
-  }, [dispatch]);
+  }, []);
 
   // States
 
@@ -33,11 +34,26 @@ const SupportView = () => {
   const [editData, setEditData] = useState(null);
   const [delDialog, setDelDialog] = useState(false);
 
+  // Filter Global 
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  });
+
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+    _filters["global"].value = value;
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
+
+  // Kbaba Menu Grid
   const kebabMenuItems = [
     { id: 1, title: "Edit", icon: <FaRegEdit /> },
     { id: 2, title: "Delete", icon: <BsTrash /> },
   ];
-  const handleOpenMenuItems = (status,rowData) => {
+  const handleOpenMenuItems = (status, rowData) => {
 
     if (status === 1) {
       setIsAddDialog(true);
@@ -53,9 +69,9 @@ const SupportView = () => {
       <>
         <GlobalVerticalDots
           items={kebabMenuItems}
-          handleMenuOpen={(status) => handleOpenMenuItems(status, rowData)} 
+          handleMenuOpen={(status) => handleOpenMenuItems(status, rowData)}
           btnclr={false}
-          
+
         />
       </>
     );
@@ -80,6 +96,8 @@ const SupportView = () => {
               type="text"
               placeholder="Search..."
               className="input_position"
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
             />
 
             <div>
@@ -96,7 +114,17 @@ const SupportView = () => {
       <div className='grid'>
         <div className='md:col-12'>
           <div className='card'>
-            <DataTable filter value={data} responsiveLayout="scroll" key="id">
+            <DataTable
+              filter
+              value={data}
+              responsiveLayout="scroll"
+              key="id"
+              rows={16}
+              emptyMessage="No record found."
+              paginator
+              filters={filters}
+              globalFilterFields={["title", "ticket_type_text", "priority_text", "assignedto", "createdby"]}
+            >
               <Column field="title" header="Ticket Title"></Column>
               <Column field="ticket_type_text" header="Ticket Type"></Column>
               <Column field="priority_text" header="Priority"></Column>

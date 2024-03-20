@@ -1,6 +1,6 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SecondaryButton from '../../ui-components/secondarybutton';
 import GlobalInputField from '../../ui-components/globalinputfield';
 import { BreadCrumb } from 'primereact/breadcrumb';
@@ -11,69 +11,65 @@ import GlobalDialogIndex from '../../ui-components/globaldialoge';
 // import GlobalInputSwitch from '../../ui-components/globalinputswitch';
 import AddEditUser from './component';
 import DeleteDialog from './component/deletedialog';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserList } from '../../redux/auth_slice/usermanagement_slice';
+import { FilterMatchMode } from "primereact/api";
 
 const UserManagement = () => {
-  const data = [
-    {
-      id: 277,
-      "full_name": "SQA",
-      "email_address": "Feedback@gmail.com",
-      "phone_no": "0333-3445678",
-      "address": "Test test Lorem IpSum",
-      "status": "Active",
-    },
-    {
-      id: 217,
-      "full_name": "SQA",
-      "email_address": "Feedback@gmail.com",
-      "phone_no": "0333-3445678",
-      "address": "Test test Lorem IpSum",
-      "status": "Inactive",
-    },
-  ]
+  const dispatch = useDispatch();
+  //Redux Selector
+  const userReducer = useSelector((state) => state.userMainList);
+  const { data } = userReducer;
+  useEffect(() => {
+    dispatch(getUserList());
+  }, []);
   // States
-
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
   const [delDialog, setDelDialog] = useState(false);
-  // const [isInputClick, setIsInputClick] = useState(false);
+  // Filter Global 
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  });
 
+  const onGlobalFilterChange = (e) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+    _filters["global"].value = value;
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
+
+  // Kbaba Menu Grid
   const kebabMenuItems = [
     { id: 1, title: "Edit", icon: <FaRegEdit /> },
     { id: 2, title: "Delete", icon: <BsTrash /> },
   ];
-  const handleOpenMenuItems = (status) => {
+  const handleOpenMenuItems = (status,rowData) => {
 
     if (status === 1) {
       setIsAddDialog(true);
-      setEditData("Edit")
+      setEditData("Edit");
+      setEditData(rowData);
     } else if (status === 2) {
       setDelDialog(true);
 
     }
   };
 
-  const actionTemplate = () => {
+  const actionTemplate = (rowData) => {
     return (
       <>
         <GlobalVerticalDots
           items={kebabMenuItems}
-          handleMenuOpen={handleOpenMenuItems}
+          handleMenuOpen={(status) => handleOpenMenuItems(status, rowData)}
           btnclr={false}
         />
       </>
     );
   }
 
-  // const activeInavtiveTemplate = (rowData) => {
-  //   return (<>
-  //     <GlobalInputSwitch
-  //       checked={rowData.status === "Active"}
-       
-  //       onClick={() => setIsInputClick(true)}
-  //     />
-  //   </>)
-  // }
   // Bredcrumb
   const items = [{ label: `UserManagement` }];
   const home = { icon: 'pi pi-home' };
@@ -94,6 +90,8 @@ const UserManagement = () => {
               type="text"
               placeholder="Search..."
               className="input_position"
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
             />
 
             <div>
@@ -110,12 +108,25 @@ const UserManagement = () => {
       <div className='grid'>
         <div className='md:col-12'>
           <div className='card'>
-            <DataTable filter value={data} responsiveLayout="scroll" key="_id">
-              <Column field="full_name" header="Full Name"></Column>
-              <Column field="email_address" header="Ticket Type"></Column>
-              <Column field="phone_no" header="Priority"></Column>
-              <Column field="address" header="Status"></Column>
-              <Column field="status" header="Assigned To"></Column>
+            <DataTable
+              filter
+              value={data}
+              responsiveLayout="scroll"
+              key="id"
+              rows={16}
+              emptyMessage="No record found."
+              paginator
+              filters={filters}
+              globalFilterFields={["fullName", "userName", "emailAddress", "isActive", "role"]}
+
+            >
+              <Column field="fullName" header="Full Name"></Column>
+              <Column field="userName" header="Username"></Column>
+              <Column field="emailAddress" header="Email Address"></Column>
+              <Column field="phoneNumber" header="Phone No"></Column>
+              <Column field="address" header="Address"></Column>
+              <Column field="role" header="Role"></Column>
+              <Column field="isActive" header="Status"></Column>
               {/* <Column body={activeInavtiveTemplate} header="Active/Inactive"></Column> */}
               <Column body={actionTemplate} header="Action"></Column>
             </DataTable>
@@ -132,7 +143,7 @@ const UserManagement = () => {
           draggable={false}
           breakpoints={{ "960px": "80vw", "640px": "90vw" }}
           style={{ width: "40vw" }}
-        component={<AddEditUser editData={editData} onHide={() => { setIsAddDialog(false); setEditData(null) }} />}
+          component={<AddEditUser editData={editData} onHide={() => { setIsAddDialog(false); setEditData(null) }} />}
         />
       )
       }
@@ -147,7 +158,7 @@ const UserManagement = () => {
           draggable={false}
           breakpoints={{ "960px": "80vw", "640px": "90vw" }}
           style={{ width: "20vw" }}
-        component={<DeleteDialog onHide={() => setDelDialog(false)} />}
+          component={<DeleteDialog onHide={() => setDelDialog(false)} />}
         />
       )}
 

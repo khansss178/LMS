@@ -19,7 +19,7 @@ const AddEditTicket = (props) => {
     const addSupportReducer = useSelector((state) => state.supportMainList);
     const { addLoading, addSuccess, addError } = addSupportReducer;
     const editSupportReducer = useSelector((state) => state.supportMainList);
-    const { updateData, updateLoading, updateSuccess, updateError, } = editSupportReducer;
+    const { updateData, updateSuccess, updateError, editLoading} = editSupportReducer;
 
     //Redux Selector End
 
@@ -60,12 +60,29 @@ const AddEditTicket = (props) => {
                 dispatch(addSupport(payload));
             } else {
                 payload.id = editData.id;
-                dispatch(updateSupport(payload));
+                dispatch(updateSupport(values));
 
             }
         }
     });
-    console.log(editData, "Check Edit Data List");
+    // properties
+    // useEffect(() => {
+    //     if (editData != null) {
+    //         loadInitialValues();
+    //     }
+    // }, []);
+
+    // const loadInitialValues = () => {
+    //     formik.setFieldValue('ticketTitle', editData.ticketTitle);
+    //     formik.setFieldValue('ticketType', editData.ticket_type_text.id);
+    //     formik.setFieldValue('priority', editData.priority_text.id);
+    //     formik.setFieldValue('assign_To', editData.assignedto);
+    //     formik.setFieldValue('status_text', editData.status_text);
+    //     formik.setFieldValue('ticketDetails', editData.ticketDetails);
+
+    // }
+
+    // console.log(editData, "Check Edit Data List");
     useEffect(() => {
         reduxService.handleResponse({
             success: addSuccess,
@@ -78,11 +95,11 @@ const AddEditTicket = (props) => {
                 formik.resetForm();
                 onHide();
                 dispatch(getSupportList());
+                window.location.reload();
             }
         });
-    }, [dispatch, addSuccess, addError]);
+    }, [addSuccess, addError]);
     useEffect(() => {
-
         if (updateSuccess !== undefined) {
             if (updateSuccess === true) {
                 toast.success("Status Updated Successfully");
@@ -99,9 +116,6 @@ const AddEditTicket = (props) => {
         }
 
     }, [updateData, updateSuccess, updateError]);
-
-
-
     //Drpdown List
     const priorityName = [
         { name: "Critical", status: "CT" },
@@ -119,16 +133,14 @@ const AddEditTicket = (props) => {
         { name: "Jaleel", status: "JL" },
         { name: "Islam", status: "IS" },
     ];
-
     const statusText = [
         { name: "Pending", status: "PG" },
         { name: "Succeded", status: "SD" },
         { name: "Rejected", status: "RD" },
     ];
-
-    useEffect(() => {
-        dispatch(getSupportList());
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(getSupportList());
+    // }, []);
 
     //Formik Error
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
@@ -248,7 +260,7 @@ const AddEditTicket = (props) => {
                                     type="submit"
                                     style={{ marginLeft: "7px" }}
                                     label={editData == null ? "Save" : "Update"}
-                                    loading={addLoading}
+                                    loading={editData == null ? addLoading : editLoading}
                                 />
                             </div>
                         </div>
