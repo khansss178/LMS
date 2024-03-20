@@ -17,7 +17,7 @@ const Login = () => {
     //forms
     const validationSchema = Yup.object().shape({
         password: Yup.string().required("Password is required.").min(8, 'Minimum length should be 8'),
-        username: Yup.string().required("Username is required."),
+        username: Yup.string().required("Email is required."),
     });
 
     const formik = useFormik({
