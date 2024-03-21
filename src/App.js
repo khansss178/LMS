@@ -36,6 +36,7 @@ import DebtorRequest from "./pages/creditrequest/debtorrequest";
 import { useSelector } from "react-redux";
 import ClientsScreen from "./pages/managment/clients";
 import DebtorScreen from "./pages/managment/debtor";
+import UserProfile from "./pages/userprofile";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");
@@ -273,6 +274,8 @@ const App = () => {
                                 <Route path="/usermanagement" exact component={UserManagement} />
                                 {/* Support */}
                                 <Route path="/support" exact component={SupportView} />
+                                {/* UserProfile */}
+                                <Route path="/userprofile" exact component={UserProfile} />
                             </div>
                             <AppFooter layoutColorMode={layoutColorMode} />
                         </div>
