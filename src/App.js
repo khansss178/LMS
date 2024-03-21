@@ -34,6 +34,8 @@ import ScheduleOfAssignment from "./pages/transaction/scheduleofassignment";
 import ClientRequest from "./pages/creditrequest/clientrequest";
 import DebtorRequest from "./pages/creditrequest/debtorrequest";
 import { useSelector } from "react-redux";
+import ClientsScreen from "./pages/managment/clients";
+import DebtorScreen from "./pages/managment/debtor";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");
@@ -156,6 +158,18 @@ const App = () => {
         {
             items: [
                 {
+                    label: "Management",
+                    icon: "pi pi-fw pi-bookmark",
+                    items: [
+                        { label: "Clients", icon: "pi pi-fw pi-bookmark", to: "/clients" },
+                        { label: "Debtor", icon: "pi pi-fw pi-bookmark", to: "/debtor" },
+                    ],
+                },
+            ],
+        },
+        {
+            items: [
+                {
                     label: "Transactions",
                     icon: "pi pi-fw pi-bookmark",
                     items: [
@@ -245,6 +259,9 @@ const App = () => {
                             <div className="layout-main">
                                 {/* //Dashboard */}
                                 <Route path="/" exact component={Dashboard} />
+                                {/* Management */}
+                                <Route path="/clients" exact component={ClientsScreen} />
+                                <Route path="/debtor" exact component={DebtorScreen} />
                                 {/* Transactions */}
                                 <Route path="/invoices" exact component={InvoicesView} />
                                 <Route path="/scheduleofassignment" exact component={ScheduleOfAssignment} />
