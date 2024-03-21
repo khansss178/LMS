@@ -70,7 +70,7 @@ const Login = () => {
                         <div className="pt-3">
                             <form className="login_form" onSubmit={formik.handleSubmit}>
                                 <div className="p-mb-4">
-                                    <h1 className="login_h1">Login</h1>
+                                    {/* <h1 className="login_h1">Login</h1> */}
                                 </div>
                                 <div className="p-mt-4">
                                     <div className="user_Email-Name  mb-3">
