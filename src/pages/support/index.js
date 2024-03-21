@@ -117,10 +117,10 @@ const SupportView = () => {
             <DataTable
               filter
               value={data}
-              responsiveLayout="scroll"
+             responsiveLayout="scroll"
               key="id"
               rows={16}
-              emptyMessage="No record found."
+              emptyMessage="No record available."
               paginator
               filters={filters}
               globalFilterFields={["title", "ticket_type_text", "priority_text", "assignedto", "createdby"]}

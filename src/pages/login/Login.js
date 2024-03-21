@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { Button } from "primereact/button";
-// import LogoImage from "../../Images/js_connect_logo_main@2x.png";
 import "./Login.css";
 import { resetChangeStatus, loginUser } from "../../redux/auth_slice/login_user_slice";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +16,7 @@ const Login = () => {
     //forms
     const validationSchema = Yup.object().shape({
         password: Yup.string().required("Password is required.").min(8, 'Minimum length should be 8'),
-        username: Yup.string().required("Username is required."),
+        username: Yup.string().required("Email is required."),
     });
 
     const formik = useFormik({
@@ -61,8 +60,8 @@ const Login = () => {
     return (
         <div className="background_image container-fluid">
             <div className="grid pr-5">
-                <div className="lg:col-8 md:col-6"></div>
-                <div className="lg:col-4 md:col-6 col-12">
+                <div className="lg:col-4 md:col-4"></div>
+                <div className="lg:col-4 md:col-4 col-12">
                     <div className="container" style={{marginTop:"20%"}}>
                         <p className="sign_in_text">Sign In</p>
                         <p className="sign_text">Enter your Email & Password to Login</p>
@@ -76,11 +75,11 @@ const Login = () => {
                                     <div className="user_Email-Name  mb-3">
 
                                         <div>
-                                            <label><b>Username</b></label>
+                                            <label><b>Email</b></label>
                                         </div>
 
                                         <div>
-                                            <InputText id='username' name='username' value={formik.values.username} onChange={formik.handleChange} autoFocus className="login_input" type="text" placeholder="User Name" />
+                                            <InputText id='username' name='username' value={formik.values.username} onChange={formik.handleChange} autoFocus className="login_input" type="text" placeholder="Enter Email" />
                                             {getFormErrorMessage('username')}
                                         </div>
                                     </div>
@@ -94,21 +93,21 @@ const Login = () => {
                                                 value={formik.values.password} onChange={formik.handleChange}
                                                 name="password" id="password"
                                                 type="password"
-                                                placeholder="Enter Password Here!"
+                                                placeholder="Enter Password"
                                                 toggleMask
                                             />
                                             {getFormErrorMessage("password")}
                                         </div>
                                     </div>
                                     <div className="flex flex-row justify-content-center mt-5 mt-2">
-                                        <Button className="btn sign_in_btn" label="Login" loading={loading} type="submit" />
+                                        <Button className="btn sign_in_btn" label="Login" loading={loading} type="submit" iconPos="right" />
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-
+<div class="lg:col-4 md:col-4"></div>
             </div>
 
         </div>
