@@ -12,9 +12,13 @@ const appURL = {
     updateUser: 'Account/UpdateUser',
     deleteUser:'Account/DeleteUser',
     // ClientManagement
-    getClientList: '/Client/GetAllClientList',
-    addClient: '',
-    updateClient: '',
+    getClientList: 'Client/GetAllClientList',
+    addClient: 'Client/AddNewClient',
+    updateClient: 'Client/UpdateClientById',
+    deleteClient: 'Client/DeleteClientById',
+    // Loan Credit Request
+    getCreditRequestList: 'LoanTransaction/GetCreditRequestList',
+    addCreditRequest:'LoanTransaction/AddCreditRequest',
 }
 
 export default appURL
