@@ -15,27 +15,18 @@ import GlobalDialogIndex from '../../../ui-components/globaldialoge';
 import DeleteDialog from './component/deletedialog';
 import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
 import AddeditRequest from './component';
+import { useDispatch, useSelector } from 'react-redux';
+import { getClientCreditRequestMainList } from '../../redux/auth_slice/clientcreditreq_slice.js';
+import moment from 'moment';
 const ClientRequest = () => {
-  const data = [
-    {
-      id: 1,
-      clientname: "Jess",
-      status: "Pending",
-      requestdot: " 2023-01-01",
-      previouscreditlimit: "$199,045.00",
-      requestcreditlimit: "$10.00",
-      currentcreditlimit: "$199,055.00",
-    },
-    {
-      id: 2,
-      clientname: "Josep",
-      status: "Approve",
-      requestdot: " 2023-01-01 20:07 ",
-      previouscreditlimit: "$199,045.00",
-      requestcreditlimit: "$10.00",
-      currentcreditlimit: "$199,055.00",
-    },
-  ];
+const dispatch = useDispatch();
+  //Redux Selector
+  const clientRequestReducer = useSelector((state) => state.getClientCreditRequestMainList);
+  const { data } = clientRequestReducer;
+    useEffect(() => {
+    dispatch(getClientCreditRequestMainList());
+
+  }, []);
 
   //States
   const [isAddDialog, setIsAddDialog] = useState(false);
@@ -66,7 +57,7 @@ const ClientRequest = () => {
 
     if (status === 1) {
       setIsAddDialog(true);
-      setEditData("Edit");
+     setEditData("Edit");
       setEditData(rowData);
     } else if (status === 2) {
       setDelDialog(true);
@@ -85,6 +76,13 @@ const ClientRequest = () => {
       </>
     );
   }
+       const createdDateTemplate = (rowData) => {
+        return (
+            <>
+                {moment(rowData?.createdDate).format('YYYY-MM-DD')}
+            </>
+        )
+    }
   // Bredcrumb
   const items = [{ label: `Clients Request` }];
   const home = { icon: 'pi pi-home', to: '/InvoicesView' };
@@ -135,14 +133,16 @@ const ClientRequest = () => {
               emptyMessage="No record available."
               paginator
               filters={filters}
-              globalFilterFields={["clientname", "status",]}
+              globalFilterFields={["client_name", "status",,"createdBy","request_type"]}
             >
-              <Column field="clientname" header="Client Name"></Column>
+               
+              <Column field="client_name" header="Client Name"></Column>
               <Column field="status" header="Status"></Column>
-              <Column field="requestdot" header="Request Date"></Column>
-              <Column field="previouscreditlimit" header="Previous Credit Limit"></Column>
-              <Column field="requestcreditlimit" header="Request Credit Limit"></Column>
-              <Column field="currentcreditlimit" header="Current Credit Limit"></Column>
+              <Column field="createdBy" header="Current Credit Limit"></Column>
+              <Column field="request_type" header="Request Type"></Column>
+              <Column body={createdDateTemplate} header="Request Date"></Column>
+              <Column field="previous_credit_limit" header="Previous Credit Limit"></Column>
+              <Column field="requested_Credit_Limit" header="Request Credit Limit"></Column>
               <Column body={actionTemplate} header="Action"></Column>
             </DataTable>
           </div>
