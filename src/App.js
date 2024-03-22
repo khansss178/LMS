@@ -244,7 +244,6 @@ const App = () => {
                         <ToastContainer />
                         <Route path="/" exact component={Login} />
                         {/* <Route path='*' component={Login} /> */}
-
                     </>)
                     : (<div className={wrapperClass} onClick={onWrapperClick}>
                         <ToastContainer />
