@@ -16,15 +16,15 @@ import DeleteDialog from './component/deletedialog';
 import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
 import AddeditRequest from './component';
 import { useDispatch, useSelector } from 'react-redux';
-import { getClientCreditRequestMainList } from '../../redux/auth_slice/clientcreditreq_slice.js';
+import { clientCreditRequestMainList  } from '../../redux/auth_slice/clientcreditreq_slice.js';
 import moment from 'moment';
 const ClientRequest = () => {
 const dispatch = useDispatch();
   //Redux Selector
-  const clientRequestReducer = useSelector((state) => state.getClientCreditRequestMainList);
+  const clientRequestReducer = useSelector((state) => state.clientCreditRequestMainList );
   const { data } = clientRequestReducer;
     useEffect(() => {
-    dispatch(getClientCreditRequestMainList());
+    dispatch(clientCreditRequestMainList ());
 
   }, []);
 
