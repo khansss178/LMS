@@ -162,8 +162,8 @@ const App = () => {
                     label: "Management",
                     icon: "pi pi-fw pi-bookmark",
                     items: [
-                        { label: "Clients", icon: "pi pi-fw pi-bookmark", to: "/clients" },
-                        { label: "Debtor", icon: "pi pi-fw pi-bookmark", to: "/debtor" },
+                        { label: "Clients", icon: "pi pi-fw pi-bookmark", to: "/api/clients" },
+                        { label: "Debtor", icon: "pi pi-fw pi-bookmark", to: "/api/debtor" },
                     ],
                 },
             ],
@@ -174,8 +174,8 @@ const App = () => {
                     label: "Transactions",
                     icon: "pi pi-fw pi-bookmark",
                     items: [
-                        { label: "Invoices", icon: "pi pi-fw pi-bookmark", to: "/invoices" },
-                        { label: "Schedule of Assignment", icon: "pi pi-fw pi-bookmark", to: "/scheduleofassignment" },
+                        { label: "Invoices", icon: "pi pi-fw pi-bookmark", to: "/api/invoices" },
+                        { label: "Schedule of Assignment", icon: "pi pi-fw pi-bookmark", to: "/api/scheduleofassignment" },
                     ],
                 },
             ],
@@ -186,8 +186,8 @@ const App = () => {
                     label: "Credit Request",
                     icon: "pi pi-fw pi-bookmark",
                     items: [
-                        { label: "Clients Request", icon: "pi pi-fw pi-bookmark", to: "/clientrequest" },
-                        { label: "Debtor Request", icon: "pi pi-fw pi-bookmark", to: "/debtorrequest" },
+                        { label: "Clients Request", icon: "pi pi-fw pi-bookmark", to: "/api/clientrequest" },
+                        { label: "Debtor Request", icon: "pi pi-fw pi-bookmark", to: "/api/debtorrequest" },
                     ],
                 },
             ],
@@ -197,7 +197,7 @@ const App = () => {
                 {
                     label: "Support",
                     icon: "pi pi-fw pi-home",
-                    to: "/support",
+                    to: "/api/support",
                 },
             ],
         },
@@ -206,7 +206,7 @@ const App = () => {
                 {
                     label: "User Management",
                     icon: "pi pi-fw pi-home",
-                    to: "/usermanagement",
+                    to: "/api/usermanagement",
                 },
             ],
         },
@@ -239,16 +239,14 @@ const App = () => {
     return (
         <>
             {
-                user === undefined ?
+                user === undefined ? (
                     <>
                         <ToastContainer />
-                        <Switch>
-                            <Route path="/" exact component={Login} />
-                            {/* <Route path='/' exact component={LoginScreen} /> */}
-                            <Route path='*' component={Login} />
-                        </Switch>
-                    </>
-                    : <div className={wrapperClass} onClick={onWrapperClick}>
+                        <Route path="/" exact component={Login} />
+                        {/* <Route path='*' component={Login} /> */}
+
+                    </>)
+                    : (<div className={wrapperClass} onClick={onWrapperClick}>
                         <ToastContainer />
                         <Tooltip ref={copyTooltipRef} target=".block-action-copy" position="bottom" content="Copied to clipboard" event="focus" />
 
@@ -258,24 +256,26 @@ const App = () => {
                         </div>
                         <div className="layout-main-container">
                             <div className="layout-main">
-                                {/* //Dashboard */}
-                                <Route path="/" exact component={Dashboard} />
-                                {/* Management */}
-                                <Route path="/clients" exact component={ClientsScreen} />
-                                <Route path="/debtor" exact component={DebtorScreen} />
-                                {/* Transactions */}
-                                <Route path="/invoices" exact component={InvoicesView} />
-                                <Route path="/scheduleofassignment" exact component={ScheduleOfAssignment} />
-                                {/* Credit Request */}
-                                <Route path="/clientrequest" exact component={ClientRequest} />
-                                <Route path="/debtorrequest" exact component={DebtorRequest} />
+                                <Switch>
+                                    {/* //Dashboard */}
+                                    <Route path="/" exact component={Dashboard} />
+                                    {/* Management */}
+                                    <Route path="/api/clients" exact component={ClientsScreen} />
+                                    <Route path="/api/debtor" exact component={DebtorScreen} />
+                                    {/* Transactions */}
+                                    <Route path="/api/invoices" exact component={InvoicesView} />
+                                    <Route path="/api/scheduleofassignment" exact component={ScheduleOfAssignment} />
+                                    {/* Credit Request */}
+                                    <Route path="/api/clientrequest" exact component={ClientRequest} />
+                                    <Route path="/api/debtorrequest" exact component={DebtorRequest} />
 
-                                {/* UserManagement */}
-                                <Route path="/usermanagement" exact component={UserManagement} />
-                                {/* Support */}
-                                <Route path="/support" exact component={SupportView} />
-                                {/* UserProfile */}
-                                <Route path="/userprofile" exact component={UserProfile} />
+                                    {/* UserManagement */}
+                                    <Route path="/api/usermanagement" exact component={UserManagement} />
+                                    {/* Support */}
+                                    <Route path="/api/support" exact component={SupportView} />
+                                    {/* UserProfile */}
+                                    <Route path="/api/userprofile" exact component={UserProfile} />
+                                </Switch>
                             </div>
                             <AppFooter layoutColorMode={layoutColorMode} />
                         </div>
@@ -286,6 +286,7 @@ const App = () => {
                             <div className="layout-mask p-component-overlay"></div>
                         </CSSTransition>
                     </div >
+                    )
             }
         </>
 

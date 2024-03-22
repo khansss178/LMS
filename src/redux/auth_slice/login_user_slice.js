@@ -12,9 +12,9 @@ const loginUserReducer = createSlice({
             return { ...state, addSuccess: undefined, editSuccess: undefined }
         },
         logout(state, action) {
-            localStorage.clear();
+            localStorage.removeItem("user");
             // window.location.reload();
-            return {};
+            return { };
         }
     },
     extraReducers: (builder) => {

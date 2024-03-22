@@ -62,7 +62,7 @@ const Login = () => {
             <div className="grid pr-5">
                 <div className="lg:col-4 md:col-4"></div>
                 <div className="lg:col-4 md:col-4 col-12">
-                    <div className="container" style={{marginTop:"20%"}}>
+                    <div className="container" style={{ marginTop: "20%" }}>
                         <p className="sign_in_text">Sign In</p>
                         <p className="sign_text">Enter your Email & Password to Login</p>
 
@@ -89,7 +89,7 @@ const Login = () => {
                                         </div>
                                         <div>
 
-                                            <Password  className="login_input input_pass"
+                                            <Password className="login_input input_pass"
                                                 value={formik.values.password} onChange={formik.handleChange}
                                                 name="password" id="password"
                                                 type="password"
@@ -107,7 +107,7 @@ const Login = () => {
                         </div>
                     </div>
                 </div>
-<div class="lg:col-4 md:col-4"></div>
+                <div className="lg:col-4 md:col-4"></div>
             </div>
 
         </div>

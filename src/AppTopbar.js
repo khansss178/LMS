@@ -6,23 +6,28 @@ import { Avatar } from "primereact/avatar";
 import { SplitButton } from "primereact/splitbutton";
 import { useDispatch } from "react-redux";
 import { logout } from "./redux/auth_slice/login_user_slice";
-// import profileimg from "../../../images/avatar/profile.jpg"
-
-
-
+import {  confirmPopup } from 'primereact/confirmpopup';
+// import profileimg from "../../../images/avatar/profile.jpg";
 export const AppTopbar = (props) => {
     const history = useHistory();
-    // const handleLogout = () => {
-    //     localStorage.removeItem("login");
-    //     window.location.reload();
-    // };
+
     const dispatch = useDispatch();
+
     const logoutUser = () => {
-        dispatch(logout());
-        window.location.reload();
-
+        confirmPopup({
+            message: 'Do you want to logout?',
+            header: 'Confirmation',
+            icon: 'pi pi-info-circle',
+            acceptClassName: 'p-button-success p-button-rounded p-button-sm custom___width',
+            accept: () => {
+                dispatch(logout());
+                history.push('/');
+            },
+            reject: () => {
+                // Do nothing if the user rejects
+            }
+        });
     }
-
     const items = [
         {
             label: "User Profile",
@@ -36,6 +41,7 @@ export const AppTopbar = (props) => {
             label: "Logout",
             icon: "pi pi-sign-out",
             command: () => {
+
                 logoutUser();
             },
         },
