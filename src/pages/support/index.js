@@ -14,7 +14,7 @@ import GlobalDialogIndex from '../../ui-components/globaldialoge';
 import AddEditTicket from './component';
 import DeleteDialog from './component/deletedialog';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSupportList } from '../../redux/auth_slice/support_slice';
+import {deleteSupport, getSupportList } from '../../redux/auth_slice/support_slice';
 import { FilterMatchMode } from "primereact/api";
 import { confirmPopup } from 'primereact/confirmpopup';
 import { toast } from 'react-toastify';
