@@ -16,16 +16,49 @@ import DeleteDialog from './component/deletedialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSupportList } from '../../redux/auth_slice/support_slice';
 import { FilterMatchMode } from "primereact/api";
+import { confirmPopup } from 'primereact/confirmpopup';
+import { toast } from 'react-toastify';
 const SupportView = () => {
   const dispatch = useDispatch();
 
   //Redux Selector
   const supportReducer = useSelector((state) => state.supportMainList);
-
-  const { data } = supportReducer;
+ let deleteId;
+  const { data, deleteSuccess } = supportReducer;
   useEffect(() => {
     dispatch(getSupportList());
 
+  }, []);
+     useEffect(() => {
+
+    if (deleteSuccess !== undefined) {
+      if (deleteSuccess === true) {
+        dispatch(getSupportList());
+        toast.warn("Deleted Successfully")
+
+      } else {
+
+      }
+    }
+  }, [deleteSuccess]);
+
+
+  const confirmDeleteAd = () => {
+    confirmPopup({
+      message: 'Do you want to delete this ticket?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptClassName: 'p-button-danger',
+      accept,
+
+    });
+  };
+  const accept = () => {
+    dispatch(deleteSupport(deleteId));
+  }
+
+  useEffect(() => {
+    dispatch(getSupportList());
   }, []);
 
   // States
@@ -60,8 +93,10 @@ const SupportView = () => {
       setEditData("Edit");
       setEditData(rowData);
     } else if (status === 2) {
-      setDelDialog(true);
-
+      // setDelDialog(true);
+ deleteId = rowData.id;
+      confirmDeleteAd(rowData.id);
+      // setEditData(rowData.id);
     }
   };
   const actionTemplate = (rowData) => {
@@ -154,18 +189,18 @@ const SupportView = () => {
       }
       {/*Del Dialogs */}
 
-      {delDialog && (
-        <GlobalDialogIndex
-          showHeader={true}
-          visible={delDialog}
-          onHide={() => setDelDialog(false)}
-          header={false}
-          draggable={false}
-          breakpoints={{ "960px": "80vw", "640px": "90vw" }}
-          style={{ width: "20vw" }}
-          component={<DeleteDialog onHide={() => setDelDialog(false)} />}
-        />
-      )}
+      // {delDialog && (
+      //   <GlobalDialogIndex
+      //     showHeader={true}
+      //     visible={delDialog}
+      //     onHide={() => setDelDialog(false)}
+      //     header={false}
+      //     draggable={false}
+      //     breakpoints={{ "960px": "80vw", "640px": "90vw" }}
+      //     style={{ width: "20vw" }}
+      //     component={<DeleteDialog onHide={() => setDelDialog(false)} />}
+      //   />
+      // )}
 
     </>
   )
