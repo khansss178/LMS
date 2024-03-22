@@ -17,8 +17,8 @@ const appURL = {
     updateClient: 'Client/UpdateClientById',
     deleteClient: 'Client/DeleteClientById',
     // Loan Credit Request
-    getCreditRequestList: 'LoanTransaction/GetCreditRequestList',
-    addCreditRequest:'LoanTransaction/AddCreditRequest',
+    clientCreditRequestMainListView: 'LoanTransaction/GetCreditRequestList',
+    addClientCreditRequest:'LoanTransaction/AddCreditRequest',
 }
 
 export default appURL
