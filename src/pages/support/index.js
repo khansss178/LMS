@@ -189,18 +189,18 @@ const SupportView = () => {
       }
       {/*Del Dialogs */}
 
-      // {delDialog && (
-      //   <GlobalDialogIndex
-      //     showHeader={true}
-      //     visible={delDialog}
-      //     onHide={() => setDelDialog(false)}
-      //     header={false}
-      //     draggable={false}
-      //     breakpoints={{ "960px": "80vw", "640px": "90vw" }}
-      //     style={{ width: "20vw" }}
-      //     component={<DeleteDialog onHide={() => setDelDialog(false)} />}
-      //   />
-      // )}
+         {/* {delDialog && (
+        <GlobalDialogIndex
+          showHeader={true}
+          visible={delDialog}
+          onHide={() => setDelDialog(false)}
+          header={false}
+          draggable={false}
+          breakpoints={{ "960px": "80vw", "640px": "90vw" }}
+          style={{ width: "20vw" }}
+          component={<DeleteDialog onHide={() => setDelDialog(false)} />}
+        />
+      )} */}
 
     </>
   )
