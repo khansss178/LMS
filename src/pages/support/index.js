@@ -18,6 +18,7 @@ import {deleteSupport, getSupportList } from '../../redux/auth_slice/support_sli
 import { FilterMatchMode } from "primereact/api";
 import { confirmPopup } from 'primereact/confirmpopup';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 const SupportView = () => {
   const dispatch = useDispatch();
   //Redux Selector
@@ -110,6 +111,14 @@ const SupportView = () => {
       </>
     );
   }
+ const createdDateTemplate = (rowData) => {
+        return (
+            <>
+                {moment(rowData?.created_at).format('YYYY-MM-DD')}
+            </>
+        )
+    }
+    
   // Bredcrumb
   const items = [{ label: `Support` }];
   const home = { icon: 'pi pi-home', to: '/InvoicesView' };
@@ -165,7 +174,7 @@ const SupportView = () => {
               <Column field="status_text" header="Status"></Column>
               <Column field="assignedto" header="Assigned To"></Column>
               <Column field="createdby" header="Created By"></Column>
-              <Column field="created_at" header="Created At"></Column>
+              <Column body={createdDateTemplate} header="Created At"></Column>
               <Column field="resolution_date" header="Resolution"></Column>
               <Column body={actionTemplate} header="Action"></Column>
             </DataTable>
