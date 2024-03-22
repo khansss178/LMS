@@ -64,6 +64,23 @@ const supportMainList = createSlice({
                     updateSuccess: false
                 }
             });
+         builder
+            .addCase(deleteSupport.pending, (state, action) => {
+                return { ...state, deleteLoading: true }
+            })
+            .addCase(deleteSupport.fulfilled, (state, action) => {
+
+                return { ...state, deleteLoading: false, addData: action.payload, deleteSuccess: true }
+            })
+            .addCase(deleteSupport.rejected, (state, action) => {
+
+                return {
+                    ...state,
+                    deleteLoading: false,
+                    addError: action.payload,
+                    addSuccess: false
+                }
+            });
 
     },
 });
@@ -113,4 +130,15 @@ export const updateSupport = createAsyncThunk('updateSupport/patch', async (body
 
     }
 
+});
+export const deleteSupport = createAsyncThunk('support/delete', async (deleteId, { rejectWithValue, fulfillWithValue }) => {
+    try {
+        const { data } = await Axios.delete(`${appURL.baseUrl}${appURL.deleteSupport}${deleteId}`);
+        return fulfillWithValue(data.data);
+    } catch (error) {
+
+        throw rejectWithValue(error.response && error.response.data.msg
+            ? error.response.data.msg
+            : error.message)
+    }
 });
