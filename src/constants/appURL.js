@@ -9,6 +9,7 @@ const appURL = {
     getUserList: 'Account/GetAllUserList',
     addUser: 'Account/AddUser',
     updateUser: 'Account/UpdateUser',
+    deleteUser:'Account/DeleteUser',
     // ClientManagement
     getClientList: '/Client/GetAllClientList',
     addClient: '',

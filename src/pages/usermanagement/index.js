@@ -12,17 +12,57 @@ import GlobalDialogIndex from '../../ui-components/globaldialoge';
 import AddEditUser from './component';
 import DeleteDialog from './component/deletedialog';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserList } from '../../redux/auth_slice/usermanagement_slice';
+import { deleteUser, getUserList } from '../../redux/auth_slice/usermanagement_slice';
 import { FilterMatchMode } from "primereact/api";
+import { confirmPopup } from 'primereact/confirmpopup';
+import { toast } from 'react-toastify';
 
 const UserManagement = () => {
   const dispatch = useDispatch();
   //Redux Selector
   const userReducer = useSelector((state) => state.userMainList);
-  const { data } = userReducer;
+  let deleteId;
+  const { data, deleteSuccess } = userReducer;
   useEffect(() => {
     dispatch(getUserList());
   }, []);
+
+  useEffect(() => {
+
+    if (deleteSuccess !== undefined) {
+      if (deleteSuccess === true) {
+        dispatch(getUserList());
+        toast.warn("Deleted Successfully")
+
+      } else {
+
+      }
+    }
+  }, [deleteSuccess]);
+
+
+  const confirmDeleteAd = () => {
+    confirmPopup({
+      message: 'Do you want to delete this ad?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptClassName: 'p-button-danger',
+      accept,
+
+    });
+  };
+  const accept = () => {
+    dispatch(deleteUser(deleteId));
+  }
+
+  useEffect(() => {
+    dispatch(getUserList());
+  }, []);
+
+
+
+
+
   // States
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -46,17 +86,21 @@ const UserManagement = () => {
     { id: 1, title: "Edit", icon: <FaRegEdit /> },
     { id: 2, title: "Delete", icon: <BsTrash /> },
   ];
-  const handleOpenMenuItems = (status,rowData) => {
+  const handleOpenMenuItems = (status, rowData) => {
 
     if (status === 1) {
       setIsAddDialog(true);
       setEditData("Edit");
       setEditData(rowData);
     } else if (status === 2) {
-      setDelDialog(true);
-
+      // setDelDialog(true);
+      deleteId = rowData.id;
+      confirmDeleteAd(rowData.id);
+      // setEditData(rowData.id);
     }
+    console.log(deleteId)
   };
+  // console.log(object)
 
   const actionTemplate = (rowData) => {
     return (
@@ -73,6 +117,12 @@ const UserManagement = () => {
   // Bredcrumb
   const items = [{ label: `UserManagement` }];
   const home = { icon: 'pi pi-home' };
+
+
+
+
+
+
   return (
     <>
       <div className="">
@@ -149,7 +199,7 @@ const UserManagement = () => {
       }
       {/*Del Dialogs */}
 
-      {delDialog && (
+      {/* {delDialog && (
         <GlobalDialogIndex
           showHeader={true}
           visible={delDialog}
@@ -160,7 +210,7 @@ const UserManagement = () => {
           style={{ width: "20vw" }}
           component={<DeleteDialog onHide={() => setDelDialog(false)} />}
         />
-      )}
+      )} */}
 
     </>
   )

@@ -64,6 +64,23 @@ const userMainList = createSlice({
                     updateSuccess: false
                 }
             });
+            builder
+            .addCase(deleteUser.pending, (state, action) => {
+                return { ...state, deleteLoading: true }
+            })
+            .addCase(deleteUser.fulfilled, (state, action) => {
+
+                return { ...state, deleteLoading: false, addData: action.payload, deleteSuccess: true }
+            })
+            .addCase(deleteUser.rejected, (state, action) => {
+
+                return {
+                    ...state,
+                    deleteLoading: false,
+                    addError: action.payload,
+                    addSuccess: false
+                }
+            });
 
     },
 });
@@ -113,4 +130,15 @@ export const updateUser = createAsyncThunk('updateUser/patch', async (body, { re
 
     }
 
+});
+export const deleteUser = createAsyncThunk('user/delete', async (deleteId, { rejectWithValue, fulfillWithValue }) => {
+    try {
+        const { data } = await Axios.delete(`${appURL.baseUrl}${appURL.deleteUser}${deleteId}`);
+        return fulfillWithValue(data.data);
+    } catch (error) {
+
+        throw rejectWithValue(error.response && error.response.data.msg
+            ? error.response.data.msg
+            : error.message)
+    }
 });
