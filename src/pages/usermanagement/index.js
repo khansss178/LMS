@@ -43,7 +43,7 @@ const UserManagement = () => {
 
   const confirmDeleteAd = () => {
     confirmPopup({
-      message: 'Do you want to delete this ad?',
+      message: 'Do you want to delete this user?',
       header: 'Delete Confirmation',
       icon: 'pi pi-info-circle',
       acceptClassName: 'p-button-danger',
@@ -98,7 +98,7 @@ const UserManagement = () => {
       confirmDeleteAd(rowData.id);
       // setEditData(rowData.id);
     }
-    console.log(deleteId)
+    // console.log(deleteId)
   };
   // console.log(object)
 
