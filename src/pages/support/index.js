@@ -20,7 +20,6 @@ import { confirmPopup } from 'primereact/confirmpopup';
 import { toast } from 'react-toastify';
 const SupportView = () => {
   const dispatch = useDispatch();
-
   //Redux Selector
   const supportReducer = useSelector((state) => state.supportMainList);
  let deleteId;
