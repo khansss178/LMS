@@ -379,3 +379,13 @@ input[type="file"] {
 .p-splitbutton.p-button-text>.p-button:not(button):not(a):not(.p-disabled):active {
     background-color: transparent;
 }
+.p-confirm-popup:before,.p-confirm-popup:after {
+    dispay:none;
+}
+.p-confirm-popup {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    margin-top: 10px;
+    width: 15%;
+}
