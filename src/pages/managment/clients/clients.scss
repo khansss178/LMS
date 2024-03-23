@@ -22,9 +22,19 @@
     color: var(--color-bg);
     font-weight: 800;
 }
-.terminated_check_styles{
+
+.terminated_check_styles {
     display: flex;
     align-items: center;
     column-gap: 4px;
     margin-top: 22px;
-  }
+}
+
+.eye-icon-btn,
+.eye-icon-btn:active,
+.eye-icon-btn:focus,
+.eye-icon-btn:hover {
+    color: #495057 !important;
+    background: transparent !important;
+    border: transparent !important;
+}

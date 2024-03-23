@@ -17,6 +17,7 @@ import GlobalCheckbox from '../../../ui-components/globalcheckbox';
 import { getClientList } from '../../../redux/auth_slice/client_slice';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { Button } from 'primereact/button';
 const ClientsScreen = () => {
     const dispatch = useDispatch();
 
@@ -58,7 +59,7 @@ const ClientsScreen = () => {
     // Kbaba Menu Grid
     const kebabMenuItems = [
         // { id: 1, title: "Edit", icon: <FaRegEdit /> },
-        { id: 2, title: "Delete", icon: <BsTrash /> },
+        // { id: 2, title: "Delete", icon: <BsTrash /> },
     ];
     const handleOpenMenuItems = (status, rowData) => {
 
@@ -74,12 +75,22 @@ const ClientsScreen = () => {
     const actionTemplate = (rowData) => {
         return (
             <>
-                <GlobalVerticalDots
+                {/* <GlobalVerticalDots
                     items={kebabMenuItems}
                     handleMenuOpen={(status) => handleOpenMenuItems(status, rowData)}
                     btnclr={false}
 
-                />
+                /> */}
+                <Button
+                    tooltip="View Details"
+                    icon="pi pi-eye"
+                    tooltipOptions={{ position: "top" }}
+                    className="eye-icon-btn"
+                   
+                    onClick={() => {
+                        // history.push("/api/complaints/" + rowData._id)
+                    }
+                    } />
             </>
         );
     }
@@ -117,14 +128,14 @@ const ClientsScreen = () => {
                             onChange={onGlobalFilterChange}
                         />
 
-                        <div>
+                        {/* <div>
                             <SecondaryButton
                                 label="Add New Client"
                                 type="button"
                                 // onClick={() => setIsAddDialog(true)}
                                 style={{ width: "120px", height: "36px", marginTop: "5px" }}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
