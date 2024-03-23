@@ -7,7 +7,7 @@ const clientCreditRequestMainList = createSlice({
     name: 'clientCreditRequestMainListView',
     initialState: {},
     reducers: {
-        resetSupportSlice(state, action) {
+        resetClientCreditRequestMainListSlice(state, action) {
             return { ...state, changeSuccess: undefined, updateSuccess: undefined }
         }
 
@@ -64,36 +64,36 @@ const clientCreditRequestMainList = createSlice({
         //             updateSuccess: false
         //         }
         //     });
-         // builder
-         //    .addCase(deleteSupport.pending, (state, action) => {
-         //        return { ...state, deleteLoading: true }
-         //    })
-         //    .addCase(deleteSupport.fulfilled, (state, action) => {
+         builder
+            .addCase(deleteCreditRequest.pending, (state, action) => {
+                return { ...state, deleteLoading: true }
+            })
+            .addCase(deleteCreditRequest.fulfilled, (state, action) => {
 
-         //        return { ...state, deleteLoading: false, addData: action.payload, deleteSuccess: true }
-         //    })
-         //    .addCase(deleteSupport.rejected, (state, action) => {
+                return { ...state, deleteLoading: false, addData: action.payload, deleteSuccess: true }
+            })
+            .addCase(deleteCreditRequest.rejected, (state, action) => {
 
-         //        return {
-         //            ...state,
-         //            deleteLoading: false,
-         //            addError: action.payload,
-         //            addSuccess: false
-         //        }
-         //    });
+                return {
+                    ...state,
+                    deleteLoading: false,
+                    addError: action.payload,
+                    addSuccess: false
+                }
+            });
 
     },
 });
 
-export default supportMainList.reducer;
-export const { resetSupportSlice } = supportMainList.actions;
+export default clientCreditRequestMainList.reducer;
+export const { resetClientCreditRequestMainListSlice } = clientCreditRequestMainList.actions;
 
 
 // Thunks
-export const getClientCreditRequestMainList = createAsyncThunk('ClientCreditRequestMainList/fetch', async (id, { rejectWithValue, fulfillWithValue }) => {
+export const getClientCreditRequestMainList = createAsyncThunk('clientCreditRequestMainList/fetch', async (id, { rejectWithValue, fulfillWithValue }) => {
 
     try {
-        const { data } = await Axios.get(appURL.baseUrl + appURL.getClientCreditRequestMainList);
+        const { data } = await Axios.get(appURL.baseUrl + appURL.clientCreditRequestMainListView);
         // console.log("object", data);
         return fulfillWithValue(data?.data);
     } catch (error) {
@@ -131,14 +131,14 @@ export const addClientCreditRequest = createAsyncThunk('addClientCreditRequestTi
 //     }
 
 // });
-// export const deleteSupport = createAsyncThunk('support/delete', async (deleteId, { rejectWithValue, fulfillWithValue }) => {
-//     try {
-//         const { data } = await Axios.delete(`${appURL.baseUrl}${appURL.deleteSupport}${deleteId}`);
-//         return fulfillWithValue(data.data);
-//     } catch (error) {
+export const deleteCreditRequest = createAsyncThunk('creditRequest/delete', async (deleteId, { rejectWithValue, fulfillWithValue }) => {
+    try {
+        const { data } = await Axios.delete(`${appURL.baseUrl}${appURL.deleteCreditRequest}${deleteId}`);
+        return fulfillWithValue(data.data);
+    } catch (error) {
 
-//         throw rejectWithValue(error.response && error.response.data.msg
-//             ? error.response.data.msg
-//             : error.message)
-//     }
-// });
+        throw rejectWithValue(error.response && error.response.data.msg
+            ? error.response.data.msg
+            : error.message)
+    }
+});

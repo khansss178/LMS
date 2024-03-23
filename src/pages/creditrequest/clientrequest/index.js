@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 //css
 import "./clientrequest.scss"
 //Prime Component
@@ -16,17 +16,53 @@ import DeleteDialog from './component/deletedialog';
 import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
 import AddeditRequest from './component';
 import { useDispatch, useSelector } from 'react-redux';
-// import { clientCreditRequestMainList  } from '../../redux/auth_slice/clientcreditreq_slice.js';
-import { clientCreditRequestMainList  } from '../../redux/auth_slice/clientcreditreq_slice.js';
 import moment from 'moment';
-const ClientRequest = () => {
-const dispatch = useDispatch();
-  //Redux Selector
-  const clientRequestReducer = useSelector((state) => state.clientCreditRequestMainList );
-  const { data } = clientRequestReducer;
-    useEffect(() => {
-    dispatch(clientCreditRequestMainList ());
+import { confirmPopup } from 'primereact/confirmpopup';
+import { toast } from 'react-toastify';
+import { deleteCreditRequest, getClientCreditRequestMainList } from '../../../redux/auth_slice/clientcreditreq_slice';
 
+
+const ClientRequest = () => {
+  const dispatch = useDispatch();
+  //Redux Selector
+  const clientRequestReducer = useSelector((state) => state.clientCreditRequestMainList);
+  let deleteId;
+  const { data, deleteSuccess } = clientRequestReducer;
+  useEffect(() => {
+    dispatch(getClientCreditRequestMainList());
+
+  }, []);
+
+  useEffect(() => {
+
+    if (deleteSuccess !== undefined) {
+      if (deleteSuccess === true) {
+        dispatch(getClientCreditRequestMainList());
+        toast.warn("Deleted Successfully")
+
+      } else {
+
+      }
+    }
+  }, [deleteSuccess]);
+
+
+  const confirmDeleteAd = () => {
+    confirmPopup({
+      message: 'Do you want to delete this request?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+      acceptClassName: 'p-button-danger',
+      accept,
+
+    });
+  };
+  const accept = () => {
+    dispatch(deleteCreditRequest(deleteId));
+  }
+
+  useEffect(() => {
+    dispatch(getClientCreditRequestMainList());
   }, []);
 
   //States
@@ -58,10 +94,12 @@ const dispatch = useDispatch();
 
     if (status === 1) {
       setIsAddDialog(true);
-     setEditData("Edit");
+      setEditData("Edit");
       setEditData(rowData);
     } else if (status === 2) {
-      setDelDialog(true);
+      // setDelDialog(true);
+      deleteId = rowData.id;
+      confirmDeleteAd(rowData.id);
 
     }
   };
@@ -77,13 +115,13 @@ const dispatch = useDispatch();
       </>
     );
   }
-       const createdDateTemplate = (rowData) => {
-        return (
-            <>
-                {moment(rowData?.createdDate).format('YYYY-MM-DD')}
-            </>
-        )
-    }
+  const createdDateTemplate = (rowData) => {
+    return (
+      <>
+        {moment(rowData?.createdDate).format('YYYY-MM-DD')}
+      </>
+    )
+  }
   // Bredcrumb
   const items = [{ label: `Clients Request` }];
   const home = { icon: 'pi pi-home', to: '/InvoicesView' };
@@ -134,9 +172,9 @@ const dispatch = useDispatch();
               emptyMessage="No record available."
               paginator
               filters={filters}
-              globalFilterFields={["client_name", "status",,"createdBy","request_type"]}
+              globalFilterFields={["client_name", "status", "createdBy", "request_type"]}
             >
-               
+
               <Column field="client_name" header="Client Name"></Column>
               <Column field="status" header="Status"></Column>
               <Column field="createdBy" header="Current Credit Limit"></Column>
@@ -159,12 +197,12 @@ const dispatch = useDispatch();
           draggable={false}
           breakpoints={{ "960px": "80vw", "640px": "90vw" }}
           style={{ width: "40vw" }}
-        component={<AddeditRequest editData={editData} onHide={() => { setIsAddDialog(false); setEditData(null) }} />}
+          component={<AddeditRequest editData={editData} onHide={() => { setIsAddDialog(false); setEditData(null) }} />}
         />
       )
       }
       {/*Del Dialogs */}
-
+      {/* 
       {delDialog && (
         <GlobalDialogIndex
           showHeader={true}
@@ -176,7 +214,7 @@ const dispatch = useDispatch();
           style={{ width: "20vw" }}
           component={<DeleteDialog onHide={() => setDelDialog(false)} />}
         />
-      )}
+      )} */}
 
     </>
   )

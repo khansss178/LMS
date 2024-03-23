@@ -6,9 +6,18 @@ import DefaultButton from '../../../../ui-components/defaultbutton';
 import SecondaryButton from '../../../../ui-components/secondarybutton';
 import GlobalDropdown from '../../../../ui-components/globaldropdown';
 import { toast } from 'react-toastify';
+import { getClientCreditRequestMainList, resetClientCreditRequestMainListSlice } from '../../../../redux/auth_slice/clientcreditreq_slice';
+import { reduxService } from '../../../../redux/services/redux_utils';
+import { useDispatch, useSelector } from 'react-redux';
 const AddeditRequest = (props) => {
     const { editData, onHide } = props;
 
+    const dispatch = useDispatch();
+
+    const addClientCreditRequest = useSelector((state) => state.clientCreditRequestMainList);
+    const { data: clientCreditRequestMainList, addLoading, addSuccess, addError } = addClientCreditRequest;
+    const editSupportReducer = useSelector((state) => state.clientCreditRequestMainList);
+    const { updateData, updateSuccess, updateError, editLoading } = editSupportReducer;
 
     //Formik Vaidations
     const validationSchema = Yup.object().shape({
@@ -26,26 +35,26 @@ const AddeditRequest = (props) => {
             client_Name: "",
             previous_Credit_Limit: "",
             request_Credit_Limit: "",
-            // assign_To: "",
             current_Credit_Limit: "",
-            // status_text: "",
         },
         onSubmit: async (values) => {
-            return;
-            // const payload = {
-            //     id: values.id,
-            //     title: values.ticketTitle,
-            //     ticket_type_text: values.ticketType.name,
-            //     created_at: new Date().toISOString(),
-            //     resolution_date: new Date().toISOString(),
-            //     createdby: "",
-            //     assignedto: values.assign_To,
-            //     priority_text: values.priority.name,
-            //     status_text: values.status_text
-            // };
-            // if (editData === null) {
-            //     dispatch(addSupport(payload));
-            // } else {
+            // return;
+            console.log(values);
+            const payload = {
+                id: values.id,
+                client_id: values.client_Name,
+                previous_credit_limit: values.previous_Credit_Limit,
+                previous_credit_limit: values.previous_Credit_Limit,
+                requested_Credit_Limit: values.request_Credit_Limit,
+                request_type: "",
+                status: "",
+                createdDate: "",
+                createdBy: ""
+            };
+            if (editData === null) {
+                dispatch(addClientCreditRequest(payload));
+            }
+            // else {
             //     payload.id = editData.id;
             //     dispatch(updateSupport(values));
 
@@ -53,12 +62,46 @@ const AddeditRequest = (props) => {
         }
     });
 
+    useEffect(() => {
+        reduxService.handleResponse({
+            success: addSuccess,
+            error: addError,
+            successMsg: 'Successfully Added',
+            resetCallback: () => {
+                dispatch(resetClientCreditRequestMainListSlice());
+            },
+            successCallBack: () => {
+                formik.resetForm();
+                onHide();
+                dispatch(getClientCreditRequestMainList());
+                window.location.reload();
+            }
+        });
+    }, [addSuccess, addError]);
+    // useEffect(() => {
+    //     if (updateSuccess !== undefined) {
+    //         if (updateSuccess === true) {
+    //             toast.success("Status Updated Successfully");
+    //             formik.resetForm();
+    //             onHide();
+    //             dispatch(get());
+    //         } else {
+    //             toast.error(updateError);
+    //         }
+    //     }
+    //     return () => {
+
+    //         dispatch(resetClientCreditRequestMainListSlice());
+    //     }
+
+    // }, [updateData, updateSuccess, updateError]);
+
     //Drpdown List
-    const clientName = [
-        { name: "Amir", status: "HG" },
-        { name: "Saad", status: "MD" },
-        { name: "Lamda", status: "LW" },
-    ];
+    // const clientName = [
+    //     { name: "Amir", status: "HG" },
+    //     { name: "Saad", status: "MD" },
+    //     { name: "Lamda", status: "LW" },
+    // ];
 
     //Formik Error
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
@@ -76,9 +119,9 @@ const AddeditRequest = (props) => {
                                 label="Client Name"
                                 name="client_Name"
                                 id="client_Name"
-                                options={clientName}
+                                options={clientCreditRequestMainList}
                                 optionLabel="name"
-                                optionValue="status"
+                                optionValue="id"
                                 placeholder="Select"
                                 isRequired
                                 // disabled={editData !== null}
@@ -141,7 +184,7 @@ const AddeditRequest = (props) => {
                                     type="submit"
                                     style={{ marginLeft: "7px" }}
                                     label={editData == null ? "Save" : "Update"}
-                                    // loading={editData == null ? addLoading : editLoading}
+                                // loading={editData == null ? addLoading : editLoading}
                                 />
                             </div>
                         </div>

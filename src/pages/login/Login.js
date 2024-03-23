@@ -15,7 +15,10 @@ const Login = () => {
     const { success, error, loading } = useSelector((state) => state.loginUser);
     //forms
     const validationSchema = Yup.object().shape({
-        password: Yup.string().required("Password is required.").min(8, 'Minimum length should be 8'),
+        // password: Yup.string().required("Password is required.").min(8, 'Minimum length should be 8'),
+        password: Yup.string().required("Password is required.").min(8, "Maximum length should be 8"),
+            // .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/, "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"),
+
         username: Yup.string().required("Email is required."),
     });
 
