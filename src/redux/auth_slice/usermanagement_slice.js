@@ -98,8 +98,8 @@ export const getUserList = createAsyncThunk('userlist/fetch', async (id, { rejec
         return fulfillWithValue(data?.data);
     } catch (error) {
 
-        throw rejectWithValue(error.response && error.response.data.message
-            ? error.response.data.message
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
     }
 
@@ -111,8 +111,8 @@ export const addUser = createAsyncThunk('addUserTicket/add', async (body, { reje
         return fulfillWithValue(data.data);
     } catch (error) {
         console.log("object", error)
-        throw rejectWithValue(error.response && error.response.data.message
-            ? error.response.data.message
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
 
     }
@@ -124,8 +124,8 @@ export const updateUser = createAsyncThunk('updateUser/patch', async (body, { re
         return fulfillWithValue(data.data);
     } catch (error) {
 
-        throw rejectWithValue(error.response && error.response.data.message
-            ? error.response.data.message
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
 
     }
@@ -137,8 +137,8 @@ export const deleteUser = createAsyncThunk('user/delete', async (deleteId, { rej
         return fulfillWithValue(data.data);
     } catch (error) {
 
-        throw rejectWithValue(error.response && error.response.data.msg
-            ? error.response.data.msg
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
     }
 });

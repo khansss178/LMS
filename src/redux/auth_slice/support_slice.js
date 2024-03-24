@@ -98,8 +98,8 @@ export const getSupportList = createAsyncThunk('supportlist/fetch', async (id, {
         return fulfillWithValue(data?.data);
     } catch (error) {
 
-        throw rejectWithValue(error.response && error.response.data.message
-            ? error.response.data.message
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
     }
 
@@ -111,8 +111,8 @@ export const addSupport = createAsyncThunk('addSupportTicket/add', async (body, 
         return fulfillWithValue(data.data);
     } catch (error) {
         console.log("object", error)
-        throw rejectWithValue(error.response && error.response.data.message
-            ? error.response.data.message
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
 
     }
@@ -124,8 +124,8 @@ export const updateSupport = createAsyncThunk('updateSupport/patch', async (body
         return fulfillWithValue(data.data);
     } catch (error) {
 
-        throw rejectWithValue(error.response && error.response.data.message
-            ? error.response.data.message
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
 
     }
@@ -137,8 +137,8 @@ export const deleteSupport = createAsyncThunk('support/delete', async (deleteId,
         return fulfillWithValue(data.data);
     } catch (error) {
 
-        throw rejectWithValue(error.response && error.response.data.msg
-            ? error.response.data.msg
+        throw rejectWithValue(error.response && error.response.data.Message
+            ? error.response.data.Message
             : error.message)
     }
 });
