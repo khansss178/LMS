@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Formik
 import * as Yup from "yup";
@@ -8,11 +8,18 @@ import { useFormik } from "formik";
 // import { Button } from "primereact/button";
 import { Password } from "primereact/password";
 import SecondaryButton from '../../../../ui-components/secondarybutton';
-
+import { getUserList } from "../../../../redux/auth_slice/usermanagement_slice";
+import { resetUpdatePasswordSlice, updatePassword } from "../../../../redux/auth_slice/profilesetting_slice";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useParams } from 'react-router-dom';
 const ChangePassword = () => {
-  // const { user } = useSelector(loginState);
-  // const toastContext = useContext(ToastContext);
-  // const [isLoading, setIsLoading] = useState(false);
+  
+  const params=useParams();
+  const {username}=params;
+  const dispatch= useDispatch()
+  const updateSupportReducer = useSelector((state) => state.updatePasswordProfile);
+  const { updateData, updateSuccess, updateError, editLoading } = updateSupportReducer;
 
   const validationSchema = Yup.object().shape({
     current_password: Yup.string().required("Current Password is required"),
@@ -32,9 +39,23 @@ const ChangePassword = () => {
       new_password: "",
       confirm_password: "",
     },
-    onSubmit: async (data) => {
-      console.log("object", data);
-      return
+    onSubmit: async (values) => {
+      const payload = {
+        current_password: values.current_password,
+        new_password: values.new_password,
+        confirm_new_password: values.confirm_password,
+        user_email: "",
+    };
+      // "current_password": "string",
+      //   "new_password": "string",
+      //     "confirm_new_password": "string",
+      //       "user_email": "string"
+      // console.log("object", data);
+
+      dispatch(updatePassword(payload))
+
+
+      // return
       // setIsLoading(true);
       // try {
       //   let dto = {
@@ -56,6 +77,30 @@ const ChangePassword = () => {
       // }
     },
   });
+
+  useEffect(() => {
+    if (updateSuccess !== undefined) {
+      if (updateSuccess === true) {
+        toast.success("Status Updated Successfully");
+        formik.resetForm();
+        // onHide();
+        dispatch(getUserList());
+      } else {
+        toast.error(updateError);
+      }
+    }
+    return () => {
+
+      dispatch(resetUpdatePasswordSlice());
+    }
+
+  }, [updateData, updateSuccess, updateError]);
+
+
+
+
+
+
   const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
   const getFormErrorMessage = (name) => {
     return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;

@@ -1,6 +1,8 @@
 const appURL = {
     baseUrl: 'https://zfkwjgvbz4irxgpaa3qxz5rmzq0alhsm.lambda-url.us-east-1.on.aws/api/',
     adminLogin: 'Account/Login',
+    // Forgot Url
+    forgotPassword: 'Account/ForgetPassword',
     // Support
     getSupportList: 'Support/GetAllTicketList',
     addSupport: 'Support/AddNewTicket',
@@ -20,6 +22,8 @@ const appURL = {
     clientCreditRequestMainListView: 'LoanTransaction/GetCreditRequestList',
     addClientCreditRequest: 'LoanTransaction/AddCreditRequest',
     deleteCreditRequest: '',
+    // Profile Setting 
+    updatePassword: 'Account/UpdateUserPassword',
 }
 
 export default appURL
