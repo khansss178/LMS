@@ -73,7 +73,7 @@ const AddEditUser = (props) => {
                 formik.resetForm();
                 onHide();
                 dispatch(getUserList());
-                // window.location.reload();
+             window.location.reload();
             },
         });
     }, [addSuccess, addError, dispatch]);
