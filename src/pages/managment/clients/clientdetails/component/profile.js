@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getClientById } from '../../../../../redux/auth_slice/client_slice';
@@ -24,20 +25,49 @@ const ProfileClient = () => {
                 <div className='grid'>
                     <div className='md:col-5'>
                         <div className='card'>
-                           <div className='flex justify-content-between'></div>
-                            {clientDetails?.data?.client_name}
+                            {/* Heading */}
+                            <div className='flex justify-content-between mb-3'>
+                                <h4>
+                                    {clientDetails?.data?.client_name}
+                                </h4>
+                            </div>
+                            {/* Details */}
+                            <div className=''>
+                                <div>
+                                    <p>Application on:</p>
+                                    <p>{moment(clientDetails?.data?.application_date).format('YYYY-MM-DD')}</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        contact no:
+                                    </p>
+                                    <p>{clientDetails?.data?.client_phone}</p>
+                                </div>
+                            </div>
+                            <div className=''>
+                                <div>
+                                    <p>contact email:</p>
+                                    <p>{clientDetails?.data?.client_email}</p>
+                                </div>
+                                <div>
+                                    <p>
+                                        Income:
+                                    </p>
+                                    <p>{clientDetails?.data?.client_income}</p>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
                     <div className='md:col-2'>
-                    <div className='card'>
-                           <div className='flex justify-content-between'></div>
+                        <div className='card'>
+                            <div className='flex justify-content-between'></div>
                             {clientDetails?.data?.client_name}
                         </div>
                     </div>
                     <div className='md:col-5'>
-                    <div className='card'>
-                           <div className='flex justify-content-between'></div>
+                        <div className='card'>
+                            <div className='flex justify-content-between'></div>
                             {clientDetails?.data?.client_name}
                         </div>
                     </div>
