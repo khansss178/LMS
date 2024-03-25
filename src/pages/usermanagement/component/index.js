@@ -25,7 +25,7 @@ const AddEditUser = (props) => {
     const validationSchema = Yup.object().shape({
         full_Name: Yup.mixed().required("Full Name is required"),
         email_Address: Yup.mixed().required("Email Address is required"),
-        assign_Role: editdata===null?null:Yup.mixed().required("Role is required"),
+        assign_Role: editData===null?null:Yup.mixed().required("Role is required"),
     });
 
     const formik = useFormik({
