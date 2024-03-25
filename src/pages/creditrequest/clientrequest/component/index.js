@@ -5,7 +5,7 @@ import GlobalInputField from '../../../../ui-components/globalinputfield';
 import DefaultButton from '../../../../ui-components/defaultbutton';
 import SecondaryButton from '../../../../ui-components/secondarybutton';
 import GlobalDropdown from '../../../../ui-components/globaldropdown';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { getClientCreditRequestMainList, resetClientCreditRequestMainListSlice } from '../../../../redux/auth_slice/clientcreditreq_slice';
 import { reduxService } from '../../../../redux/services/redux_utils';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +15,9 @@ const AddeditRequest = (props) => {
     const dispatch = useDispatch();
 
     const addClientCreditRequest = useSelector((state) => state.clientCreditRequestMainList);
-    const { data: clientCreditRequestMainList, addLoading, addSuccess, addError } = addClientCreditRequest;
-    const editSupportReducer = useSelector((state) => state.clientCreditRequestMainList);
-    const { updateData, updateSuccess, updateError, editLoading } = editSupportReducer;
+    const { data: clientCreditRequestMainList, addSuccess, addError } = addClientCreditRequest;
+    // const editSupportReducer = useSelector((state) => state.clientCreditRequestMainList);
+    // const { updateData, updateSuccess, updateError, editLoading } = editSupportReducer;
 
     //Formik Vaidations
     const validationSchema = Yup.object().shape({
@@ -43,7 +43,7 @@ const AddeditRequest = (props) => {
             const payload = {
                 id: values.id,
                 client_id: values.client_Name,
-                previous_credit_limit: values.previous_Credit_Limit,
+                // previous_credit_limit: values.previous_Credit_Limit,
                 previous_credit_limit: values.previous_Credit_Limit,
                 requested_Credit_Limit: values.request_Credit_Limit,
                 request_type: "",
@@ -74,10 +74,10 @@ const AddeditRequest = (props) => {
                 formik.resetForm();
                 onHide();
                 dispatch(getClientCreditRequestMainList());
-                window.location.reload();
+                // window.location.reload();
             }
         });
-    }, [addSuccess, addError]);
+    }, [addSuccess, addError, dispatch]);
     // useEffect(() => {
     //     if (updateSuccess !== undefined) {
     //         if (updateSuccess === true) {

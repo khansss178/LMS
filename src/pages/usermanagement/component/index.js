@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from "yup";
 import { useFormik } from 'formik';
 import GlobalDropdown from '../../../ui-components/globaldropdown';
@@ -76,7 +76,7 @@ const AddEditUser = (props) => {
                 window.location.reload();
             }
         });
-    }, [addSuccess, addError]);
+    }, [addSuccess, addError,dispatch]);
     useEffect(() => {
         if (updateSuccess !== undefined) {
             if (updateSuccess === true) {
@@ -93,7 +93,7 @@ const AddEditUser = (props) => {
             dispatch(resetUserSlice());
         }
 
-    }, [updateData, updateSuccess, updateError]);
+    }, [updateData, updateSuccess, updateError,dispatch]);
 
     //Drpdown List
     const roleName = [

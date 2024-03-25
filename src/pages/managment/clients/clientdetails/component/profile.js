@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getClientById } from '../../../../../redux/auth_slice/client_slice';
-import ClientItem from './clientitem';
+// import ClientItem from './clientitem';
 const ProfileClient = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -15,7 +15,7 @@ const ProfileClient = () => {
         dispatch(getClientById(id));
 
     }, [dispatch, id]);
-    console.log("Client Details:", clientIDReducer);
+    // console.log("Client Details:", clientIDReducer);
 
     return (
         <>

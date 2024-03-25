@@ -12,9 +12,9 @@ import GlobalInputField from '../../ui-components/globalinputfield';
 import SecondaryButton from '../../ui-components/secondarybutton';
 import GlobalDialogIndex from '../../ui-components/globaldialoge';
 import AddEditTicket from './component';
-import DeleteDialog from './component/deletedialog';
+// import DeleteDialog from './component/deletedialog';
 import { useDispatch, useSelector } from 'react-redux';
-import {deleteSupport, getSupportList } from '../../redux/auth_slice/support_slice';
+import { deleteSupport, getSupportList } from '../../redux/auth_slice/support_slice';
 import { FilterMatchMode } from "primereact/api";
 import { confirmPopup } from 'primereact/confirmpopup';
 import { toast } from 'react-toastify';
@@ -23,13 +23,13 @@ const SupportView = () => {
   const dispatch = useDispatch();
   //Redux Selector
   const supportReducer = useSelector((state) => state.supportMainList);
- let deleteId;
+  let deleteId;
   const { data, deleteSuccess } = supportReducer;
   useEffect(() => {
     dispatch(getSupportList());
 
-  }, []);
-     useEffect(() => {
+  }, [dispatch]);
+  useEffect(() => {
 
     if (deleteSuccess !== undefined) {
       if (deleteSuccess === true) {
@@ -40,7 +40,7 @@ const SupportView = () => {
 
       }
     }
-  }, [deleteSuccess]);
+  }, [deleteSuccess,dispatch]);
 
 
   const confirmDeleteAd = () => {
@@ -59,13 +59,13 @@ const SupportView = () => {
 
   useEffect(() => {
     dispatch(getSupportList());
-  }, []);
+  }, [dispatch]);
 
   // States
 
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [delDialog, setDelDialog] = useState(false);
+  // const [delDialog, setDelDialog] = useState(false);
 
   // Filter Global 
   const [globalFilterValue, setGlobalFilterValue] = useState("");
@@ -94,7 +94,7 @@ const SupportView = () => {
       setEditData(rowData);
     } else if (status === 2) {
       // setDelDialog(true);
- deleteId = rowData.id;
+      deleteId = rowData.id;
       confirmDeleteAd(rowData.id);
       // setEditData(rowData.id);
     }
@@ -111,14 +111,14 @@ const SupportView = () => {
       </>
     );
   }
- const createdDateTemplate = (rowData) => {
-        return (
-            <>
-                {moment(rowData?.created_at).format('YYYY-MM-DD')}
-            </>
-        )
-    }
-    
+  const createdDateTemplate = (rowData) => {
+    return (
+      <>
+        {moment(rowData?.created_at).format('YYYY-MM-DD')}
+      </>
+    )
+  }
+
   // Bredcrumb
   const items = [{ label: `Support` }];
   const home = { icon: 'pi pi-home', to: '/InvoicesView' };
@@ -160,7 +160,7 @@ const SupportView = () => {
             <DataTable
               filter
               value={data}
-             responsiveLayout="scroll"
+              responsiveLayout="scroll"
               key="id"
               rows={16}
               emptyMessage="No record available."
@@ -197,7 +197,7 @@ const SupportView = () => {
       }
       {/*Del Dialogs */}
 
-         {/* {delDialog && (
+      {/* {delDialog && (
         <GlobalDialogIndex
           showHeader={true}
           visible={delDialog}

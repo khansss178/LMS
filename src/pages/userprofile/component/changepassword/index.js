@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 // Formik
 import * as Yup from "yup";
@@ -12,11 +12,11 @@ import { getUserList } from "../../../../redux/auth_slice/usermanagement_slice";
 import { resetUpdatePasswordSlice, updatePassword } from "../../../../redux/auth_slice/profilesetting_slice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 const ChangePassword = () => {
   
-  const params=useParams();
-  const {username}=params;
+  // const params=useParams();
+  // const {username}=params;
   const dispatch= useDispatch()
   const updateSupportReducer = useSelector((state) => state.updatePasswordProfile);
   const { updateData, updateSuccess, updateError, editLoading } = updateSupportReducer;

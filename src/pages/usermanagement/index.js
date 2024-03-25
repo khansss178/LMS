@@ -10,7 +10,7 @@ import { BsTrash } from 'react-icons/bs';
 import GlobalDialogIndex from '../../ui-components/globaldialoge';
 // import GlobalInputSwitch from '../../ui-components/globalinputswitch';
 import AddEditUser from './component';
-import DeleteDialog from './component/deletedialog';
+// import DeleteDialog from './component/deletedialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, getUserList } from '../../redux/auth_slice/usermanagement_slice';
 import { FilterMatchMode } from "primereact/api";
@@ -25,7 +25,7 @@ const UserManagement = () => {
   const { data, deleteSuccess } = userReducer;
   useEffect(() => {
     dispatch(getUserList());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
 
@@ -38,7 +38,7 @@ const UserManagement = () => {
 
       }
     }
-  }, [deleteSuccess]);
+  }, [deleteSuccess,dispatch]);
 
 
   const confirmDeleteAd = () => {
@@ -57,7 +57,7 @@ const UserManagement = () => {
 
   useEffect(() => {
     dispatch(getUserList());
-  }, []);
+  }, [dispatch]);
 
 
 
@@ -66,7 +66,7 @@ const UserManagement = () => {
   // States
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [delDialog, setDelDialog] = useState(false);
+  // const [delDialog, setDelDialog] = useState(false);
   // Filter Global 
   const [globalFilterValue, setGlobalFilterValue] = useState("");
   const [filters, setFilters] = useState({

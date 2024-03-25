@@ -4,13 +4,13 @@ import "./clients.scss"
 //Prime Component
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { BsTrash } from 'react-icons/bs';
-import { FaRegEdit } from "react-icons/fa";
+// import { BsTrash } from 'react-icons/bs';
+// import { FaRegEdit } from "react-icons/fa";
 import { BreadCrumb } from "primereact/breadcrumb";
 import { FilterMatchMode } from "primereact/api";
-import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
+// import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
 import GlobalInputField from '../../../ui-components/globalinputfield';
-import SecondaryButton from '../../../ui-components/secondarybutton';
+// import SecondaryButton from '../../../ui-components/secondarybutton';
 import GlobalDialogIndex from '../../../ui-components/globaldialoge';
 import DeleteDialog from './component/deletedialog';
 import GlobalCheckbox from '../../../ui-components/globalcheckbox';
@@ -29,7 +29,7 @@ const ClientsScreen = () => {
     useEffect(() => {
         dispatch(getClientList());
 
-    }, []);
+    }, [dispatch]);
     // const data = [
     //     {id:1, business_name: "ABC", phone_no: "8798798798", client_available_limit: "$12", client_address: "none" },
     //     {id:2, business_name: "DEF", phone_no: "2312312312", client_available_limit: "$200", client_address: "Northen City" },
@@ -58,21 +58,21 @@ const ClientsScreen = () => {
     };
 
     // Kbaba Menu Grid
-    const kebabMenuItems = [
+   // const kebabMenuItems = [
         // { id: 1, title: "Edit", icon: <FaRegEdit /> },
         // { id: 2, title: "Delete", icon: <BsTrash /> },
-    ];
-    const handleOpenMenuItems = (status, rowData) => {
+    //];
+   // const handleOpenMenuItems = (status, rowData) => {
 
-        if (status === 1) {
+     //   if (status === 1) {
             // setIsAddDialog(true);
-            setEditData("Edit");
+       //     setEditData("Edit");
             // setEditData(rowData);
-        } else if (status === 2) {
-            setDelDialog(true);
+        //} else if (status === 2) {
+          //  setDelDialog(true);
 
-        }
-    };
+        //}
+    //};
     const actionTemplate = (rowData) => {
         return (
             <>

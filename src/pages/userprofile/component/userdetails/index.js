@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import * as Yup from "yup";
 import { useFormik } from 'formik';
-import { Avatar } from 'primereact/avatar'
+// import { Avatar } from 'primereact/avatar'
 // import DefaultImg from "../../../../../assets/layout/images/amyelsner.png"
 import DefaultImg from "../../../../assets/demo/flags/flags_responsive.png"
-import AddEditUser from '../../../usermanagement/component'
+// import AddEditUser from '../../../usermanagement/component'
 import GlobalInputField from '../../../../ui-components/globalinputfield'
-import DefaultButton from '../../../../ui-components/defaultbutton'
+// import DefaultButton from '../../../../ui-components/defaultbutton'
 import SecondaryButton from '../../../../ui-components/secondarybutton'
 import GlobalTextarea from '../../../../ui-components/globaltextarea';
 import GlobalDropdown from '../../../../ui-components/globaldropdown';
@@ -43,10 +43,10 @@ const UserDetails = () => {
   });
 
   //Drpdown List
-  const roleName = [
-    { name: "Admin", code: "AD" },
-    { name: "User", code: "US" }
-  ];
+  // const roleName = [
+  //   { name: "Admin", code: "AD" },
+  //   { name: "User", code: "US" }
+  // ];
   const genderName = [
     { name: "Male", code: "ML" },
     { name: "Female", code: "FM" },

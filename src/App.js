@@ -38,7 +38,7 @@ import ClientsScreen from "./pages/managment/clients";
 import DebtorScreen from "./pages/managment/debtor";
 import UserProfile from "./pages/userprofile";
 import ClientDetails from "./pages/managment/clients/clientdetails";
-import ProfileClient from "./pages/managment/clients/clientdetails/component/profile";
+// import ProfileClient from "./pages/managment/clients/clientdetails/component/profile";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");

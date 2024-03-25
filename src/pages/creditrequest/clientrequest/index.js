@@ -12,7 +12,7 @@ import GlobalCheckbox from '../../../ui-components/globalcheckbox';
 import GlobalInputField from '../../../ui-components/globalinputfield';
 import SecondaryButton from '../../../ui-components/secondarybutton';
 import GlobalDialogIndex from '../../../ui-components/globaldialoge';
-import DeleteDialog from './component/deletedialog';
+// import DeleteDialog from './component/deletedialog';
 import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
 import AddeditRequest from './component';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +31,7 @@ const ClientRequest = () => {
   useEffect(() => {
     dispatch(getClientCreditRequestMainList());
 
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
 
@@ -44,7 +44,7 @@ const ClientRequest = () => {
 
       }
     }
-  }, [deleteSuccess]);
+  }, [deleteSuccess,dispatch]);
 
 
   const confirmDeleteAd = () => {
@@ -63,12 +63,12 @@ const ClientRequest = () => {
 
   useEffect(() => {
     dispatch(getClientCreditRequestMainList());
-  }, []);
+  }, [dispatch]);
 
   //States
   const [isAddDialog, setIsAddDialog] = useState(false);
   const [editData, setEditData] = useState(null);
-  const [delDialog, setDelDialog] = useState(false);
+  // const [delDialog, setDelDialog] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
   // Filter Global 

@@ -98,7 +98,7 @@ const AddEditTicket = (props) => {
                 window.location.reload();
             }
         });
-    }, [addSuccess, addError]);
+    }, [addSuccess, addError,dispatch]);
     useEffect(() => {
         if (updateSuccess !== undefined) {
             if (updateSuccess === true) {
@@ -115,7 +115,7 @@ const AddEditTicket = (props) => {
             dispatch(resetSupportSlice());
         }
 
-    }, [updateData, updateSuccess, updateError]);
+    }, [updateData, updateSuccess, updateError,dispatch]);
     //Drpdown List
     const priorityName = [
         { name: "Critical", status: "CT" },
