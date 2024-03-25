@@ -25,7 +25,7 @@ const AddEditUser = (props) => {
     const validationSchema = Yup.object().shape({
         full_Name: Yup.mixed().required("Full Name is required"),
         email_Address: Yup.mixed().required("Email Address is required"),
-        assign_Role: editData===null?null:Yup.mixed().required("Role is required"),
+        assign_Role:Yup.mixed().required("Role is required"),
     });
 
     const formik = useFormik({
@@ -114,12 +114,12 @@ const AddEditUser = (props) => {
         formik.setFieldValue("email_Address", result?.emailAddress);
         formik.setFieldValue("phone_No", result?.phoneNumber);
         formik.setFieldValue("user_Name", result?.userName);
-        // formik.setFieldValue("gender", result?.gender);
-        // formik.setFieldValue("assign_Role", result?.role);
+         formik.setFieldValue("gender", result?.gender);
+        formik.setFieldValue("assign_Role", result?.role);
     //      formik.setFieldValue("gender", typeof result?.gender === 'object' ? result?.gender?.name : result?.gender);
     // formik.setFieldValue("assign_Role", typeof result?.role === 'object' ? result?.role?.name : result?.role);
-         formik.setFieldValue("gender", result?.gender ? result?.gender.name : ""); // Set default value if result?.gender is null or undefined
-    formik.setFieldValue("assign_Role", result?.role ? result?.role.name : "");
+    //      formik.setFieldValue("gender", result?.gender ? result?.gender.name : ""); // Set default value if result?.gender is null or undefined
+    // formik.setFieldValue("assign_Role", result?.role ? result?.role.name : "");
 
         formik.setFieldValue("address", result?.address);
     };
@@ -165,14 +165,14 @@ const AddEditUser = (props) => {
                             // {getFormErrorMessage("gender")}
                         </div>
                         {/* 
-                        */}
                         {editData !== null && ( 
+                        */}
                         <div className="col-12 md:col-6 pb-3">
                             <GlobalDropdown label="Role" id="assign_Role" name="assign_Role" options={roleName} optionLabel="name" optionValue="name" placeholder="Select" isRequired value={formik.values.assign_Role} onChange={formik.handleChange} />
                             {getFormErrorMessage("assign_Role")}
                         </div>
-                        )} 
                         {/* 
+                        )} 
                         */}
                         <div className="col-12 md:col-12 pb-3">
                             <GlobalTextarea label="Address" name="address" id="address" rows="3" placeholder="Enter Address" disabled={editData !== null} value={formik.values.address} onChange={formik.handleChange} />
