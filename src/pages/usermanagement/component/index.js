@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import * as Yup from "yup";
-import { useFormik } from 'formik';
-import GlobalDropdown from '../../../ui-components/globaldropdown';
-import GlobalTextarea from '../../../ui-components/globaltextarea';
-import GlobalInputField from '../../../ui-components/globalinputfield';
-import DefaultButton from '../../../ui-components/defaultbutton';
-import SecondaryButton from '../../../ui-components/secondarybutton';
-import { useDispatch, useSelector } from 'react-redux';
-import { addUser, getUserList, resetUserSlice, updateUser } from '../../../redux/auth_slice/usermanagement_slice';
-import { reduxService } from '../../../redux/services/redux_utils';
-import { toast } from 'react-toastify';
+import { useFormik } from "formik";
+import GlobalDropdown from "../../../ui-components/globaldropdown";
+import GlobalTextarea from "../../../ui-components/globaltextarea";
+import GlobalInputField from "../../../ui-components/globalinputfield";
+import DefaultButton from "../../../ui-components/defaultbutton";
+import SecondaryButton from "../../../ui-components/secondarybutton";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, getUserList, resetUserSlice, updateUser } from "../../../redux/auth_slice/usermanagement_slice";
+import { reduxService } from "../../../redux/services/redux_utils";
+import { toast } from "react-toastify";
 
 const AddEditUser = (props) => {
     const dispatch = useDispatch();
@@ -50,22 +50,21 @@ const AddEditUser = (props) => {
                 role: values.assign_Role.name,
                 gender: values.gender.name,
                 isActive: true,
-                password: ""
+                password: "",
             };
             if (editData === null) {
                 dispatch(addUser(payload));
             } else {
                 payload.id = editData.id;
                 dispatch(updateUser(values));
-
             }
-        }
+        },
     });
     useEffect(() => {
         reduxService.handleResponse({
             success: addSuccess,
             error: addError,
-            successMsg: 'Successfully Added',
+            successMsg: "Successfully Added",
             resetCallback: () => {
                 dispatch(resetUserSlice());
             },
@@ -74,9 +73,9 @@ const AddEditUser = (props) => {
                 onHide();
                 dispatch(getUserList());
                 window.location.reload();
-            }
+            },
         });
-    }, [addSuccess, addError,dispatch]);
+    }, [addSuccess, addError, dispatch]);
     useEffect(() => {
         if (updateSuccess !== undefined) {
             if (updateSuccess === true) {
@@ -89,16 +88,14 @@ const AddEditUser = (props) => {
             }
         }
         return () => {
-
             dispatch(resetUserSlice());
-        }
-
-    }, [updateData, updateSuccess, updateError,dispatch]);
+        };
+    }, [updateData, updateSuccess, updateError, dispatch]);
 
     //Drpdown List
     const roleName = [
         { name: "Admin", code: "AD" },
-        { name: "User", code: "US" }
+        { name: "User", code: "US" },
     ];
     const genderName = [
         { name: "Male", code: "ML" },
@@ -112,51 +109,34 @@ const AddEditUser = (props) => {
     };
 
     const settingValuesHanlder = (result) => {
-        formik.setFieldValue("fullName", result?.full_Name);
-       
+        console.log({ result });
+        formik.setFieldValue("full_Name", result?.fullName);
+        formik.setFieldValue("email_Address", result?.emailAddress);
+        formik.setFieldValue("phone_No", result?.phoneNumber);
+        formik.setFieldValue("user_Name", result?.userName);
+        formik.setFieldValue("gender", result?.gender);
+        formik.setFieldValue("assign_Role", result?.role);
+        formik.setFieldValue("address", result?.address);
     };
- useEffect(() => {
-     if(editData !== null){
-         settingValuesHanlder(editData)
-     }
- },[editData])
-
-
-
-
-
-
+    useEffect(() => {
+        if (editData !== null) {
+            settingValuesHanlder(editData);
+        }
+    }, [editData]);
+    console.log({ editData });
 
     return (
         <>
-            <div className='container-fluid'>
+            <div className="container-fluid">
                 <form onSubmit={formik.handleSubmit}>
                     <div className="grid">
                         <div className="col-12 md:col-6 pb-3">
-                            <GlobalInputField
-                                label="Full Name"
-                                name="full_Name"
-                                id="full_Name"
-                                placeholder="Enter Full Name"
-                                isRequired
-                                disabled={editData !== null}
-                                value={formik.values.full_Name}
-                                onChange={formik.handleChange}
-                            />
-                            {getFormErrorMessage('full_Name')}
+                            <GlobalInputField label="Full Name" name="full_Name" id="full_Name" placeholder="Enter Full Name" isRequired disabled={editData !== null} value={formik.values.full_Name} onChange={formik.handleChange} />
+                            {getFormErrorMessage("full_Name")}
                         </div>
                         <div className="col-12 md:col-6 pb-3">
-                            <GlobalInputField
-                                label="Email Address"
-                                name="email_Address"
-                                id="email_Address"
-                                placeholder="Enter Email Address"
-                                isRequired
-                                disabled={editData !== null}
-                                value={formik.values.email_Address}
-                                onChange={formik.handleChange}
-                            />
-                            {getFormErrorMessage('email_Address')}
+                            <GlobalInputField label="Email Address" name="email_Address" id="email_Address" placeholder="Enter Email Address" isRequired disabled={editData !== null} value={formik.values.email_Address} onChange={formik.handleChange} />
+                            {getFormErrorMessage("email_Address")}
                         </div>
                         <div className="col-12 md:col-6 pb-3">
                             <GlobalInputField
@@ -169,85 +149,44 @@ const AddEditUser = (props) => {
                                 value={formik.values.user_Name}
                                 onChange={formik.handleChange}
                             />
-                            {getFormErrorMessage('user_Name')}
+                            {getFormErrorMessage("user_Name")}
                         </div>
                         <div className="col-12 md:col-6 pb-3">
-                            <GlobalInputField
-                                label="Phone No"
-                                name="phone_No"
-                                id="phone_No"
-                                placeholder="Enter Phone No"
-                                disabled={editData !== null}
-                                value={formik.values.phone_No}
-                                onChange={formik.handleChange}
-                            />
-                            {getFormErrorMessage('phone_No')}
+                            <GlobalInputField label="Phone No" name="phone_No" id="phone_No" placeholder="Enter Phone No" disabled={editData !== null} value={formik.values.phone_No} onChange={formik.handleChange} />
+                            {getFormErrorMessage("phone_No")}
                         </div>
                         <div className="col-12 md:col-6 pb-3">
-                            <GlobalDropdown
-                                label="Gender"
-                                name="gender"
-                                id="gender"
-                                options={genderName}
-                                optionLabel="name"
-                                placeholder="Select"
-                                disabled={editData !== null}
-                                value={formik.values.gender}
-                                onChange={formik.handleChange}
-                            />
-                            {getFormErrorMessage('gender')}
+                            <GlobalDropdown label="Gender" name="gender" id="gender" options={genderName} optionLabel="name" optionValue="name" placeholder="Select" disabled={editData !== null} value={formik.values.gender} onChange={formik.handleChange} />
+                            {getFormErrorMessage("gender")}
                         </div>
                         {/* {editData !== null && ( */}
                         <div className="col-12 md:col-6 pb-3">
-                            <GlobalDropdown
-                                label="Role"
-                                id="assign_Role"
-                                name="assign_Role"
-                                options={roleName}
-                                optionLabel="name"
-                                placeholder="Select"
-                                isRequired
-                                value={formik.values.assign_Role}
-                                onChange={formik.handleChange}
-                            />
-                            {getFormErrorMessage('assign_Role')}
+                            <GlobalDropdown label="Role" id="assign_Role" name="assign_Role" options={roleName} optionLabel="name" optionValue="name" placeholder="Select" isRequired value={formik.values.assign_Role} onChange={formik.handleChange} />
+                            {getFormErrorMessage("assign_Role")}
                         </div>
                         {/* )} */}
                         <div className="col-12 md:col-12 pb-3">
-                            <GlobalTextarea
-                                label="Address"
-                                name="address"
-                                id="address"
-                                rows="3"
-                                placeholder="Enter Address"
-                                disabled={editData !== null}
-                                value={formik.values.address}
-                                onChange={formik.handleChange}
-                            />
-                            {getFormErrorMessage('address')}
+                            <GlobalTextarea label="Address" name="address" id="address" rows="3" placeholder="Enter Address" disabled={editData !== null} value={formik.values.address} onChange={formik.handleChange} />
+                            {getFormErrorMessage("address")}
                         </div>
-                        <div className='col-12 mb-3'>
-                            <div className='text-center'>
-                                <DefaultButton label="Cancel"
+                        <div className="col-12 mb-3">
+                            <div className="text-center">
+                                <DefaultButton
+                                    label="Cancel"
                                     style={{ marginRight: "7px" }}
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        onHide()
-                                    }} />
-                                <SecondaryButton
-                                    type="submit"
-                                    style={{ marginLeft: "7px" }}
-                                    label={editData == null ? "Save" : "Update"}
-                                    loading={editData == null ? addLoading : editLoading}
-
+                                        onHide();
+                                    }}
                                 />
+                                <SecondaryButton type="submit" style={{ marginLeft: "7px" }} label={editData == null ? "Save" : "Update"} loading={editData == null ? addLoading : editLoading} />
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default AddEditUser
+export default AddEditUser;
