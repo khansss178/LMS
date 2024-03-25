@@ -164,12 +164,16 @@ const AddEditUser = (props) => {
                             <GlobalDropdown label="Gender" name="gender" id="gender" options={genderName} optionLabel="name" optionValue="name" placeholder="Select" disabled={editData !== null} value={formik.values.gender} onChange={formik.handleChange} />
                             // {getFormErrorMessage("gender")}
                         </div>
-                        {/* {editData !== null && ( */}
+                        {/* 
+                        */}
+                        {editData !== null && ( 
                         <div className="col-12 md:col-6 pb-3">
                             <GlobalDropdown label="Role" id="assign_Role" name="assign_Role" options={roleName} optionLabel="name" optionValue="name" placeholder="Select" isRequired value={formik.values.assign_Role} onChange={formik.handleChange} />
                             {getFormErrorMessage("assign_Role")}
                         </div>
-                        {/* )} */}
+                        )} 
+                        {/* 
+                        */}
                         <div className="col-12 md:col-12 pb-3">
                             <GlobalTextarea label="Address" name="address" id="address" rows="3" placeholder="Enter Address" disabled={editData !== null} value={formik.values.address} onChange={formik.handleChange} />
                             {getFormErrorMessage("address")}
