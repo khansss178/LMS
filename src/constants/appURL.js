@@ -18,6 +18,7 @@ const appURL = {
     addClient: 'Client/AddNewClient',
     updateClient: 'Client/UpdateClientById',
     deleteClient: 'Client/DeleteClientById',
+    getClientById:'Client/GetSingleClientById',
     // Loan Credit Request
     clientCreditRequestMainListView: 'LoanTransaction/GetCreditRequestList',
     addClientCreditRequest: 'LoanTransaction/AddCreditRequest',

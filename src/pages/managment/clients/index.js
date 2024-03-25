@@ -18,9 +18,10 @@ import { getClientList } from '../../../redux/auth_slice/client_slice';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { Button } from 'primereact/button';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 const ClientsScreen = () => {
     const dispatch = useDispatch();
-
+    const history = useHistory();
     //Redux Selector
     const clientReducer = useSelector((state) => state.clientMainList);
 
@@ -86,9 +87,9 @@ const ClientsScreen = () => {
                     icon="pi pi-eye"
                     tooltipOptions={{ position: "top" }}
                     className="eye-icon-btn"
-                   
+
                     onClick={() => {
-                        // history.push("/api/complaints/" + rowData._id)
+                        history.push("/api/clientdetails" + rowData.id)
                     }
                     } />
             </>

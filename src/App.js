@@ -37,6 +37,8 @@ import { useSelector } from "react-redux";
 import ClientsScreen from "./pages/managment/clients";
 import DebtorScreen from "./pages/managment/debtor";
 import UserProfile from "./pages/userprofile";
+import ClientDetails from "./pages/managment/clients/clientdetails";
+import ProfileClient from "./pages/managment/clients/clientdetails/component/profile";
 
 const App = () => {
     const [layoutMode, setLayoutMode] = useState("static");
@@ -260,6 +262,7 @@ const App = () => {
                                     <Route path="/" exact component={Dashboard} />
                                     {/* Management */}
                                     <Route path="/api/clients" exact component={ClientsScreen} />
+                                    <Route path="/api/clientdetails:id" exact component={ClientDetails} />
                                     <Route path="/api/debtor" exact component={DebtorScreen} />
                                     {/* Transactions */}
                                     <Route path="/api/invoices" exact component={InvoicesView} />

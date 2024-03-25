@@ -66,6 +66,26 @@ const clientMainList = createSlice({
                 }
             });
 
+        builder
+            .addCase(getClientById.pending, (state, action) => {
+                return { ...state, clientDetailsloading: true }
+            })
+            .addCase(getClientById.fulfilled, (state, action) => {
+                // console.log("Received client details:", action.payload);
+
+                return { ...state, clientDetailsloading: false, clientDetails: action.payload, changeByIdSuccess: true }
+            })
+            .addCase(getClientById.rejected, (state, action) => {
+                // console.log("Error while fetching client details:", action.error); // Log the error
+
+                return {
+                    ...state,
+                    clientDetailsloading: false,
+                    changeByIdError: action.payload,
+                    changeByIdSuccess: false
+                }
+            });
+
     },
 });
 
@@ -94,7 +114,7 @@ export const addClient = createAsyncThunk('addClientTicket/add', async (body, { 
 
         return fulfillWithValue(data.data);
     } catch (error) {
-        console.log("object", error)
+        // console.log("object", error)
         throw rejectWithValue(error.response && error.response.data.message
             ? error.response.data.message
             : error.message)
@@ -112,6 +132,23 @@ export const updateClient = createAsyncThunk('updateClient/patch', async (body, 
             ? error.response.data.message
             : error.message)
 
+    }
+
+});
+export const getClientById = createAsyncThunk('clientbyId/get', async (id, { rejectWithValue }) => {
+
+    // try {
+    //     const { data } = await Axios.get(`${appURL.baseUrl}${appURL.getClientById}${id}`);
+
+    //     return fulfillWithValue(data.data[0]);
+    // }
+    try {
+        const response = await Axios.get(`${appURL.baseUrl}${appURL.getClientById}${id}`);
+        return response.data; // Return the entire response data
+    } catch (error) {
+        throw rejectWithValue(error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message)
     }
 
 });

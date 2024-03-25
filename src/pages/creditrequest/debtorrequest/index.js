@@ -14,7 +14,7 @@ import SecondaryButton from '../../../ui-components/secondarybutton';
 import GlobalDialogIndex from '../../../ui-components/globaldialoge';
 import DeleteDialog from './component/deletedialog';
 import GlobalVerticalDots from '../../../ui-components/globalverticaldots';
-import AddeditRequest from './component';
+// import AddeditRequest from './component';
 import AddeditDebtor from './component';
 const DebtorRequest = () => {
   const data = [
