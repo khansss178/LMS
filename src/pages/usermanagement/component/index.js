@@ -116,8 +116,10 @@ const AddEditUser = (props) => {
         formik.setFieldValue("user_Name", result?.userName);
         // formik.setFieldValue("gender", result?.gender);
         // formik.setFieldValue("assign_Role", result?.role);
-         formik.setFieldValue("gender", typeof result?.gender === 'object' ? result?.gender?.name : result?.gender);
-    formik.setFieldValue("assign_Role", typeof result?.role === 'object' ? result?.role?.name : result?.role);
+    //      formik.setFieldValue("gender", typeof result?.gender === 'object' ? result?.gender?.name : result?.gender);
+    // formik.setFieldValue("assign_Role", typeof result?.role === 'object' ? result?.role?.name : result?.role);
+         formik.setFieldValue("gender", result?.gender ? result?.gender.name : ""); // Set default value if result?.gender is null or undefined
+    formik.setFieldValue("assign_Role", result?.role ? result?.role.name : "");
 
         formik.setFieldValue("address", result?.address);
     };
