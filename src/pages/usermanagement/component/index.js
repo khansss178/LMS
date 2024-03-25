@@ -114,8 +114,11 @@ const AddEditUser = (props) => {
         formik.setFieldValue("email_Address", result?.emailAddress);
         formik.setFieldValue("phone_No", result?.phoneNumber);
         formik.setFieldValue("user_Name", result?.userName);
-        formik.setFieldValue("gender", result?.gender);
-        formik.setFieldValue("assign_Role", result?.role);
+        // formik.setFieldValue("gender", result?.gender);
+        // formik.setFieldValue("assign_Role", result?.role);
+         formik.setFieldValue("gender", typeof result?.gender === 'object' ? result?.gender?.name : result?.gender);
+    formik.setFieldValue("assign_Role", typeof result?.role === 'object' ? result?.role?.name : result?.role);
+
         formik.setFieldValue("address", result?.address);
     };
     useEffect(() => {
