@@ -119,7 +119,13 @@ const UserManagement = () => {
   const home = { icon: 'pi pi-home' };
 
 
-
+  const statusTemplate = (rowData) => {
+    return (
+      <>
+         {rowData.isActive===true ? "Active" : "Inactive"}
+      </>
+    );
+  }
 
 
 
@@ -176,7 +182,7 @@ const UserManagement = () => {
               <Column field="phoneNumber" header="Phone No"></Column>
               <Column field="address" header="Address"></Column>
               <Column field="role" header="Role"></Column>
-              <Column field="isActive" header="Status"></Column>
+              <Column body={statusTemplate} header="Status"></Column>
               {/* <Column body={activeInavtiveTemplate} header="Active/Inactive"></Column> */}
               <Column body={actionTemplate} header="Action"></Column>
             </DataTable>
