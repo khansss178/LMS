@@ -25,7 +25,7 @@ const AddEditUser = (props) => {
     const validationSchema = Yup.object().shape({
         full_Name: Yup.mixed().required("Full Name is required"),
         email_Address: Yup.mixed().required("Email Address is required"),
-        assign_Role: Yup.mixed().required("Role is required"),
+        assign_Role: editdata===null?null:Yup.mixed().required("Role is required"),
     });
 
     const formik = useFormik({
@@ -162,7 +162,7 @@ const AddEditUser = (props) => {
                         </div>
                         <div className="col-12 md:col-6 pb-3">
                             <GlobalDropdown label="Gender" name="gender" id="gender" options={genderName} optionLabel="name" optionValue="name" placeholder="Select" disabled={editData !== null} value={formik.values.gender} onChange={formik.handleChange} />
-                            {getFormErrorMessage("gender")}
+                            // {getFormErrorMessage("gender")}
                         </div>
                         {/* {editData !== null && ( */}
                         <div className="col-12 md:col-6 pb-3">
