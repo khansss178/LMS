@@ -111,6 +111,22 @@ const AddEditUser = (props) => {
         return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
     };
 
+    const settingValuesHanlder = (result) => {
+        formik.setFieldValue("fullName", result?.full_Name);
+       
+    };
+ useEffect(() => {
+     if(editData !== null){
+         settingValuesHanlder(editData)
+     }
+ },[editData])
+
+
+
+
+
+
+
     return (
         <>
             <div className='container-fluid'>
