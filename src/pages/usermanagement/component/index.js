@@ -56,7 +56,7 @@ const AddEditUser = (props) => {
                 dispatch(addUser(payload));
             } else {
                 payload.id = editData.id;
-                dispatch(updateUser(values));
+                dispatch(updateUser(payload));
             }
         },
     });
