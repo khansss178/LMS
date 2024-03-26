@@ -3,6 +3,8 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getClientById } from '../../../../../redux/auth_slice/client_slice';
+import GlobalCheckbox from '../../../../../ui-components/globalcheckbox';
+import { Accordion, AccordionTab } from 'primereact/accordion';
 // import ClientItem from './clientitem';
 const ProfileClient = () => {
     const dispatch = useDispatch();
@@ -17,6 +19,17 @@ const ProfileClient = () => {
 
     }, [dispatch, id]);
     // console.log("Client Details:", clientIDReducer);
+
+    const HeaderItems = (ownerName, ownerEmail) => {
+        return (
+            <>
+                <div className="flex flex-column pl-2 pt-2 pb-2">
+                    <h6 className="m-0">{ownerName}</h6>
+                    <p className="m-0">{ownerEmail}</p>
+                </div>
+            </>
+        );
+    };
 
     return (
         <>
@@ -185,7 +198,7 @@ const ProfileClient = () => {
                     </div>
                     {/* miscellaneous information */}
                     <div className='md:col-6 col-12'>
-                        <div className='profile-client-card card'>
+                        <div className='profile-client-card card h-auto'>
                             {/* Heading */}
                             <div className='flex justify-content-between mb-3'>
                                 <h4>
@@ -251,6 +264,36 @@ const ProfileClient = () => {
 
                             </div>
                         </div>
+                        {/* _ownersList information */}
+                        <div className='profile-client-card card h-auto'>
+                            {/* Heading */}
+                            <div className='flex justify-content-between mb-3'>
+                                <h4>
+                                    Owner Information
+                                </h4>
+                            </div>
+                            {/* Details */}
+
+                            <div className="business_scrollbar">
+                                <Accordion activeIndex={0}>
+                                    {clientDetails?.data?._ownersList.map((owner, index) => (
+                                        <AccordionTab key={index} headerTemplate={() => HeaderItems(owner.owner_name, owner.owner_email)}>
+                                            <div>
+                                                <p><strong>Name:</strong> {owner.owner_name}</p>
+                                                <p><strong>Address:</strong> {owner.owner_address}</p>
+                                                <p><strong>City:</strong> {owner.owner_city}</p>
+                                                <p><strong>State:</strong> {owner.owner_state}</p>
+                                                <p><strong>Zip:</strong> {owner.owner_zip}</p>
+                                                <p><strong>Phone:</strong> {owner.owner_phone}</p>
+                                                <p><strong>Date of Birth:</strong> {owner.owner_dob}</p>
+                                                <p><strong>SSN:</strong> {owner.owner_ssn}</p>
+                                            </div>
+                                        </AccordionTab>
+                                    ))}
+                                </Accordion>
+                            </div>
+
+                        </div>
                     </div>
                     {/* financial information */}
                     <div className='md:col-6 col-12'>
@@ -269,7 +312,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_bank_name || 'N/A'}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -278,7 +320,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_account_no || "N/A"}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -287,7 +328,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{moment(clientDetails?.data?.client_account_opening_date).format('YYYY-MM-DD') || "N/A"}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -296,7 +336,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_bank_routing_number || 'N/A'}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -305,7 +344,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_bank_officer_name || 'N/A'}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -314,7 +352,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_current_available_balance || "N/A"}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -323,18 +360,14 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_bank_zip || "N/A"}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
                                     <div className="md:col-8 col-12">
-                                        <p>
-                                            <b> State:</b>
-                                        </p>
+                                        <p><b> State:</b></p>
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_bank_state || "N/A"}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -343,7 +376,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_bank_city || "N/A"}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -352,7 +384,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_bank_phone || "N/A"}</p>
-
                                     </div>
                                 </div>
                                 <div className='grid'>
@@ -361,7 +392,6 @@ const ProfileClient = () => {
                                     </div>
                                     <div className="md:col-4 col-12">
                                         <p>{clientDetails?.data?.client_loan_outstanding_status ? 'Yes' : 'No'}</p>
-
                                     </div>
                                 </div>
 
