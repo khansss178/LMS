@@ -19,41 +19,43 @@ const AddEditTicket = (props) => {
     const addSupportReducer = useSelector((state) => state.supportMainList);
     const { addLoading, addSuccess, addError } = addSupportReducer;
     const editSupportReducer = useSelector((state) => state.supportMainList);
-    const { updateData, updateSuccess, updateError, editLoading} = editSupportReducer;
+    const { updateData, updateSuccess, updateError, editLoading } = editSupportReducer;
 
     //Redux Selector End
 
 
     //Formik Vaidations
     const validationSchema = Yup.object().shape({
-        ticketTitle: Yup.mixed().required("Ticket Title is required"),
-        ticketType: Yup.mixed().required("Ticke Type is required"),
-        priority: Yup.mixed().required("Priority is required"),
-        assign_To: editData === null ? null : Yup.mixed().required("Assign To is required"),
-        status_text: editData === null ? null : Yup.mixed().required("Status is required"),
+        title: Yup.mixed().required("Ticket Title is required"),
+        ticket_type_text: Yup.mixed().required("Ticke Type is required"),
+        priority_text: Yup.mixed().required("priority_text is required"),
+        assignedto: Yup.mixed().required("Assign To is required"),
+        // assignedto: editData === null ? null : Yup.mixed().required("Assign To is required"),
+        status_text: Yup.mixed().required("Status is required"),
+        // status_text: editData === null ? null : Yup.mixed().required("Status is required"),
         ticketDetails: Yup.mixed().required("Ticket Details is required"),
     });
 
     const formik = useFormik({
         validationSchema: validationSchema,
         initialValues: {
-            ticketTitle: "",
-            ticketType: "",
-            priority: "",
-            assign_To: "",
+            title: "",
+            ticket_type_text: "",
+            priority_text: "",
+            assignedto: "",
             ticketDetails: "",
             status_text: "",
         },
         onSubmit: async (values) => {
             const payload = {
                 id: values.id,
-                title: values.ticketTitle,
-                ticket_type_text: values.ticketType.name,
+                title: values.title,
+                ticket_type_text: values.ticket_type_text,
                 created_at: new Date().toISOString(),
                 resolution_date: new Date().toISOString(),
                 createdby: "",
-                assignedto: values.assign_To,
-                priority_text: values.priority.name,
+                assignedto: values.assignedto,
+                priority_text: values.priority_text,
                 status_text: values.status_text
             };
             if (editData === null) {
@@ -66,23 +68,7 @@ const AddEditTicket = (props) => {
         }
     });
     // properties
-    // useEffect(() => {
-    //     if (editData != null) {
-    //         loadInitialValues();
-    //     }
-    // }, []);
 
-    // const loadInitialValues = () => {
-    //     formik.setFieldValue('ticketTitle', editData.ticketTitle);
-    //     formik.setFieldValue('ticketType', editData.ticket_type_text.id);
-    //     formik.setFieldValue('priority', editData.priority_text.id);
-    //     formik.setFieldValue('assign_To', editData.assignedto);
-    //     formik.setFieldValue('status_text', editData.status_text);
-    //     formik.setFieldValue('ticketDetails', editData.ticketDetails);
-
-    // }
-
-    // console.log(editData, "Check Edit Data List");
     useEffect(() => {
         reduxService.handleResponse({
             success: addSuccess,
@@ -98,7 +84,7 @@ const AddEditTicket = (props) => {
                 window.location.reload();
             }
         });
-    }, [addSuccess, addError,dispatch]);
+    }, [addSuccess, addError, dispatch]);
     useEffect(() => {
         if (updateSuccess !== undefined) {
             if (updateSuccess === true) {
@@ -115,9 +101,9 @@ const AddEditTicket = (props) => {
             dispatch(resetSupportSlice());
         }
 
-    }, [updateData, updateSuccess, updateError,dispatch]);
+    }, [updateData, updateSuccess, updateError, dispatch]);
     //Drpdown List
-    const priorityName = [
+    const priority_textName = [
         { name: "Critical", status: "CT" },
         { name: "High", status: "HG" },
         { name: "Medium", status: "MD" },
@@ -138,15 +124,29 @@ const AddEditTicket = (props) => {
         { name: "Succeded", status: "SD" },
         { name: "Rejected", status: "RD" },
     ];
-    // useEffect(() => {
-    //     dispatch(getSupportList());
-    // }, []);
 
     //Formik Error
     const isFormFieldValid = (name) => !!(formik.touched[name] && formik.errors[name]);
     const getFormErrorMessage = (name) => {
         return isFormFieldValid(name) && <small className="p-error">{formik.errors[name]}</small>;
     };
+
+    const settingValuesHanlder = (result) => {
+        console.log({ result });
+        formik.setFieldValue("title", result?.title);
+        formik.setFieldValue("ticket_type_text", result?.ticket_type_text);
+        formik.setFieldValue("priority_text", result?.priority_text);
+        formik.setFieldValue("assignedto", result?.userName);
+        formik.setFieldValue("ticketDetails", result?.ticketDetails);
+        formik.setFieldValue("status_text", result?.status_text);
+    };
+    useEffect(() => {
+        if (editData !== null) {
+            settingValuesHanlder(editData);
+        }
+    }, [editData]);
+
+
     return (
         <>
             <div className='container-fluid'>
@@ -156,66 +156,66 @@ const AddEditTicket = (props) => {
                         <div className="col-12 md:col-6 pb-3">
                             <GlobalInputField
                                 label="Ticket Title"
-                                name="ticketTitle"
-                                id="ticketTitle"
+                                name="title"
+                                id="title"
                                 placeholder="Enter text here"
                                 isRequired
                                 disabled={editData !== null}
-                                value={formik.values.ticketTitle}
+                                value={formik.values.title}
                                 onChange={formik.handleChange}
                             />
-                            {getFormErrorMessage('ticketTitle')}
+                            {getFormErrorMessage('title')}
                         </div>
                         <div className="col-12 md:col-6 pb-3">
                             <GlobalDropdown
                                 label="Ticket Type"
-                                name="ticketType"
-                                id="ticketType"
+                                name="ticket_type_text"
+                                id="ticket_type_text"
                                 options={ticketName}
                                 optionLabel="name"
-                                optionValue="status"
+                                optionValue="name"
                                 placeholder="Select"
                                 isRequired
                                 disabled={editData !== null}
-                                value={formik.values.ticketType}
+                                value={formik.values.ticket_type_text}
                                 onChange={formik.handleChange}
                             />
-                            {getFormErrorMessage('ticketType')}
+                            {getFormErrorMessage('ticket_type_text')}
                         </div>
                         <div className="col-12 md:col-6 pb-3">
                             <GlobalDropdown
-                                label="Priority"
-                                id="priority"
-                                name="priority"
-                                options={priorityName}
+                                label="priority_text"
+                                id="priority_text"
+                                name="priority_text"
+                                options={priority_textName}
                                 optionLabel="name"
-                                optionValue="status"
+                                optionValue="name"
                                 placeholder="Select"
                                 isRequired
                                 disabled={editData !== null}
-                                value={formik.values.priority}
+                                value={formik.values.priority_text}
                                 onChange={formik.handleChange}
                             />
-                            {getFormErrorMessage('priority')}
+                            {getFormErrorMessage('priority_text')}
                         </div>
 
-                        {editData !== null && (
+                        {/* {editData !== null && ( */}
                             <>
                                 <div className="col-12 md:col-6 pb-3">
 
                                     <GlobalDropdown
                                         label="Assign To"
-                                        id="assign_To"
-                                        name="assign_To"
+                                        id="assignedto"
+                                        name="assignedto"
                                         options={assignTo}
                                         optionLabel="name"
-                                        optionValue="status"
+                                        optionValue="name"
                                         placeholder="Select"
                                         isRequired
-                                        value={formik.values.assign_To}
+                                        value={formik.values.assignedto}
                                         onChange={formik.handleChange}
                                     />
-                                    {getFormErrorMessage('assign_To')}
+                                    {getFormErrorMessage('assignedto')}
                                 </div>
                                 <div className="col-12 md:col-6 pb-3">
                                     <GlobalDropdown
@@ -224,7 +224,7 @@ const AddEditTicket = (props) => {
                                         name="status_text"
                                         options={statusText}
                                         optionLabel="name"
-                                        optionValue="status"
+                                        optionValue="name"
                                         placeholder="Select"
                                         isRequired
                                         value={formik.values.status_text}
@@ -233,7 +233,7 @@ const AddEditTicket = (props) => {
                                     {getFormErrorMessage('status_text')}
                                 </div>
                             </>
-                        )}
+                        {/* )} */}
                         <div className="col-12 col-md-12 pb-3">
                             <GlobalTextarea
                                 label="Ticket Details"

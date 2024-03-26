@@ -47,7 +47,6 @@ const AddEditUser = (props) => {
                 userName: values.userName,
                 phoneNumber: values.phoneNumber,
                 address: values.address,
-
                 role: values.role, // Use values.role directly
                 gender: values.gender, // Use values.gender directly
                 isActive: true,
