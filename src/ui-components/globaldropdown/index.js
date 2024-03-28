@@ -6,7 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 const GlobalDropdown = (props) => {
     const { value, options, onChange, optionLabel, placeholder, name, id, editable = false, label, isRequired, isDependent, disabled, ...remainingProps } = props;
 
-    console.log({ value, optionLabel });
+    // console.log({ value, optionLabel });
     return (
         <>
             {label && (

@@ -6,7 +6,7 @@ const appURL = {
     // Support
     getSupportList: 'Support/GetAllTicketList',
     addSupport: 'Support/AddNewTicket',
-    updateSupport: 'Support/UpdateTicketById',
+    updateSupport: 'Support/UpdateTicket',
     deleteSupport: 'Support/DeleteTicketById',
     // UserManagement
     getUserList: 'Account/GetAllUserList',

@@ -33,7 +33,7 @@ const AddEditTicket = (props) => {
         // assignedto: editData === null ? null : Yup.mixed().required("Assign To is required"),
         status_text: Yup.mixed().required("Status is required"),
         // status_text: editData === null ? null : Yup.mixed().required("Status is required"),
-        ticketDetails: Yup.mixed().required("Ticket Details is required"),
+        ticket_details: Yup.mixed().required("Ticket Details is required"),
     });
 
     const formik = useFormik({
@@ -43,26 +43,40 @@ const AddEditTicket = (props) => {
             ticket_type_text: "",
             priority_text: "",
             assignedto: "",
-            ticketDetails: "",
+            ticket_details: "",
             status_text: "",
         },
         onSubmit: async (values) => {
+        
             const payload = {
                 id: values.id,
                 title: values.title,
                 ticket_type_text: values.ticket_type_text,
-                created_at: new Date().toISOString(),
-                resolution_date: new Date().toISOString(),
+                created_at: "",
+                resolution_date: "",
                 createdby: "",
                 assignedto: values.assignedto,
                 priority_text: values.priority_text,
-                status_text: values.status_text
+                status_text: values.status_text,
+                ticket_details:"",
+
+                // "id": 32,
+                // "title": "string",
+                // "ticket_type_text": "string",
+                // "created_at": "2024-03-27T01:41:23.876Z",
+                // "resolution_date": "2024-03-27T01:41:23.876Z",
+                // "createdby": "string",
+                // "assignedto": "string",
+                // "priority_text": "string",
+                // "status_text": "string"
             };
             if (editData === null) {
                 dispatch(addSupport(payload));
+                console.log({payload})
             } else {
                 payload.id = editData.id;
-                dispatch(updateSupport(values));
+                dispatch(updateSupport(payload));
+                console.log({payload})
 
             }
         }
@@ -94,6 +108,7 @@ const AddEditTicket = (props) => {
                 dispatch(getSupportList());
             } else {
                 toast.error(updateError);
+                dispatch(getSupportList());
             }
         }
         return () => {
@@ -132,12 +147,12 @@ const AddEditTicket = (props) => {
     };
 
     const settingValuesHanlder = (result) => {
-        console.log({ result });
+        // console.log({ result });
         formik.setFieldValue("title", result?.title);
         formik.setFieldValue("ticket_type_text", result?.ticket_type_text);
         formik.setFieldValue("priority_text", result?.priority_text);
-        formik.setFieldValue("assignedto", result?.userName);
-        formik.setFieldValue("ticketDetails", result?.ticketDetails);
+        formik.setFieldValue("assignedto", result?.assignedto);
+        formik.setFieldValue("ticket_details", result?.ticket_details);
         formik.setFieldValue("status_text", result?.status_text);
     };
     useEffect(() => {
@@ -145,6 +160,7 @@ const AddEditTicket = (props) => {
             settingValuesHanlder(editData);
         }
     }, [editData]);
+    // console.log({ editData });
 
 
     return (
@@ -200,53 +216,53 @@ const AddEditTicket = (props) => {
                         </div>
 
                         {/* {editData !== null && ( */}
-                            <>
-                                <div className="col-12 md:col-6 pb-3">
+                        <>
+                            <div className="col-12 md:col-6 pb-3">
 
-                                    <GlobalDropdown
-                                        label="Assign To"
-                                        id="assignedto"
-                                        name="assignedto"
-                                        options={assignTo}
-                                        optionLabel="name"
-                                        optionValue="name"
-                                        placeholder="Select"
-                                        isRequired
-                                        value={formik.values.assignedto}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {getFormErrorMessage('assignedto')}
-                                </div>
-                                <div className="col-12 md:col-6 pb-3">
-                                    <GlobalDropdown
-                                        label="Status"
-                                        id="status_text"
-                                        name="status_text"
-                                        options={statusText}
-                                        optionLabel="name"
-                                        optionValue="name"
-                                        placeholder="Select"
-                                        isRequired
-                                        value={formik.values.status_text}
-                                        onChange={formik.handleChange}
-                                    />
-                                    {getFormErrorMessage('status_text')}
-                                </div>
-                            </>
+                                <GlobalDropdown
+                                    label="Assign To"
+                                    id="assignedto"
+                                    name="assignedto"
+                                    options={assignTo}
+                                    optionLabel="name"
+                                    optionValue="name"
+                                    placeholder="Select"
+                                    isRequired
+                                    value={formik.values.assignedto}
+                                    onChange={formik.handleChange}
+                                />
+                                {getFormErrorMessage('assignedto')}
+                            </div>
+                            <div className="col-12 md:col-6 pb-3">
+                                <GlobalDropdown
+                                    label="Status"
+                                    id="status_text"
+                                    name="status_text"
+                                    options={statusText}
+                                    optionLabel="name"
+                                    optionValue="name"
+                                    placeholder="Select"
+                                    isRequired
+                                    value={formik.values.status_text}
+                                    onChange={formik.handleChange}
+                                />
+                                {getFormErrorMessage('status_text')}
+                            </div>
+                        </>
                         {/* )} */}
                         <div className="col-12 col-md-12 pb-3">
                             <GlobalTextarea
                                 label="Ticket Details"
-                                name="ticketDetails"
-                                id="ticketDetails"
+                                name="ticket_details"
+                                id="ticket_details"
                                 rows="3"
                                 placeholder="Enter text here"
-                                isRequired
+                                // isRequired
                                 disabled={editData !== null}
-                                value={formik.values.ticketDetails}
+                                value={formik.values.ticket_details}
                                 onChange={formik.handleChange}
                             />
-                            {getFormErrorMessage('ticketDetails')}
+                            {getFormErrorMessage('ticket_details')}
                         </div>
                         <div className='col-12 mb-3'>
                             <div className='text-center'>
